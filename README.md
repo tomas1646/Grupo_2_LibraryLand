@@ -29,4 +29,4 @@ Se ofrecerán todo tipo de libros, con una gran variedad de autores y temáticas
 * [Yenny](https://www.yenny-elateneo.com/)
 * [SBS](https://www.sbs.com.ar/)
 * [Cuspide](https://www.cuspide.com/)
-* [Librerenta](https://www.librenta.com/)
+* [Librenta](https://www.librenta.com/)
