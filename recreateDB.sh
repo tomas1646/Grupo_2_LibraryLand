@@ -1,0 +1,1 @@
+docker exec -it libraryland_mysql bash -c "mysql -uroot -e 'DROP DATABASE IF EXISTS libraryland; CREATE DATABASE libraryland;'"
