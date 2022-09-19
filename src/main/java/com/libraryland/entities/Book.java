@@ -53,4 +53,12 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name="author_id")
     )
     private List<Author> authors = new ArrayList();
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL) //cascade type dudoso. Revisar. Que pas acon las ordenes cuando se borra el book?
+    private List<CartDetail> cartDetails = new ArrayList<CartDetail>();
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL) //cascade type dudoso. Revisar 
+    private List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+
+
 }
