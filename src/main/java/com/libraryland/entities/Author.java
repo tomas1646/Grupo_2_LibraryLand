@@ -5,7 +5,6 @@ import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,10 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Audited
-public class Author {
+public class Author  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "full_name", nullable = false)
     private String fullName;
@@ -27,5 +26,6 @@ public class Author {
     private String description;
 
     @ManyToMany(mappedBy = "authors")
+    @Builder.Default
     private List<Book> books = new ArrayList<>();
 }

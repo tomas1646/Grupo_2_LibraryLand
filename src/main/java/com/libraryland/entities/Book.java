@@ -18,15 +18,14 @@ import java.util.List;
 @Builder
 @Audited
 public class Book {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private Long Id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "synopsis",length = 2000)
+    @Column(name = "synopsis", length = 2000)
     private String synopsis;
 
     @Column(name = "publication_year")
@@ -35,30 +34,29 @@ public class Book {
     @Column(name = "stock")
     private int stock;
 
-    @Column(name="price",precision=8, scale=2)
+    @Column(name = "price", precision = 8, scale = 2)
     private float price;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name="book_genre",
-            joinColumns = @JoinColumn(name="book_id"),
-            inverseJoinColumns = @JoinColumn(name="genre_id")
+            name = "book_genre",
+            joinColumns = @JoinColumn(name = "fk_book"),
+            inverseJoinColumns = @JoinColumn(name = "fk_genre")
     )
     private List<Genre> genres = new ArrayList();
 
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name="book_author",
-            joinColumns = @JoinColumn(name="book_id"),
-            inverseJoinColumns = @JoinColumn(name="author_id")
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "fk_book"),
+            inverseJoinColumns = @JoinColumn(name = "fk_author")
     )
     private List<Author> authors = new ArrayList();
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL) //cascade type dudoso. Revisar. Que pas acon las ordenes cuando se borra el book?
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    //cascade type dudoso. Revisar. Que pas acon las ordenes cuando se borra el book?
     private List<CartDetail> cartDetails = new ArrayList<CartDetail>();
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL) //cascade type dudoso. Revisar 
     private List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
-
-
 }

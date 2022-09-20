@@ -31,17 +31,11 @@ import lombok.Setter;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(name = "total_price")
-    private int totalPrice;
     @Column(name = "quantity")
     private int quantity;
 
-    @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.MERGE}, orphanRemoval = true)
-    private List<CartDetail> details = new ArrayList<CartDetail>();
-
-    
-
-
+    @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
+    private List<CartDetail> details = new ArrayList<>();
 }

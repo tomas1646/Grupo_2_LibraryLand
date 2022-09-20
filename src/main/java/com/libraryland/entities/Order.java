@@ -16,19 +16,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.envers.Audited;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
-@Table(name = "order")
+// Note: the table name is "order" but it is a reserved word in SQL, so we need to use the @Table annotation to specify the table name
+@Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -38,22 +36,22 @@ import lombok.Setter;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "number")
     private int number;
 
-    @Column(name = "total_price")
-    private int totalPrice;
+    @Column(name = "total")
+    private double total;
 
     @Column(name = "date")
     private Date date;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fk_user")
     private User user;
 
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.MERGE}, orphanRemoval = true)    
-    private List<OrderDetail> details = new ArrayList<OrderDetail>();
-    
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
+    @Builder.Default
+    private List<OrderDetail> details = new ArrayList<>();
 }

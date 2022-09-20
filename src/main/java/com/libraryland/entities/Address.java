@@ -10,8 +10,6 @@ import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
 
-import com.mysql.cj.xdevapi.Client;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,7 +30,7 @@ public class Address {
     private Long id;
 
     @OneToOne(mappedBy = "address")
-    private Client cliente;       
+    private User user;
 
     @Column(name = "city")
     private String city;
@@ -41,5 +39,5 @@ public class Address {
     private String street;
 
     @Column(name = "number")
-    private int number;    
+    private int number;
 }

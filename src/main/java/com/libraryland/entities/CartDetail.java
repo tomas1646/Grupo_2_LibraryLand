@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "cartDetail")
+@Table(name = "cart_detail")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,20 +29,19 @@ import lombok.Setter;
 public class CartDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "quantity")
     private int quantity;
 
     @Column(name = "price")
-    private double price;    
+    private double price;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fk_cart")
     private Cart cart;
-    
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fk_book")
     private Book book;
-
 }

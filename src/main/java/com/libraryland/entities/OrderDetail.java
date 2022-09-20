@@ -1,30 +1,34 @@
 package com.libraryland.entities;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-import org.hibernate.annotations.ManyToAny;
+import lombok.*;
+import org.hibernate.envers.Audited;
 
+@Entity
+@Table(name = "order_detail")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Audited
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "price")
     private double price;
 
     @Column(name = "quantity")
-    private int quantity;   
-    
-    @ManyToOne()
+    private int quantity;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fk_order")
     private Order order;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fk_book")
     private Book book;
 }

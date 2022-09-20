@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,13 +21,11 @@ import java.util.List;
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(name="name", unique = true, nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "genres")
     private List<Book> books = new ArrayList<>();
-
-
 }
