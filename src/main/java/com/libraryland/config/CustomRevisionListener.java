@@ -1,6 +1,6 @@
 package com.libraryland.config;
 
-import com.libraryland.audit.Revision;
+import com.libraryland.entities.audit.Revision;
 import org.hibernate.envers.RevisionListener;
 
 public class CustomRevisionListener implements RevisionListener {

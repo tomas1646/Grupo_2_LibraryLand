@@ -1,4 +1,4 @@
-package com.libraryland.audit;
+package com.libraryland.entities.audit;
 
 import com.libraryland.config.CustomRevisionListener;
 import lombok.Data;
