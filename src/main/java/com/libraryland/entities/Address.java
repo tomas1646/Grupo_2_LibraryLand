@@ -24,7 +24,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Audited
-public class Address {
+public class Address extends Base {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

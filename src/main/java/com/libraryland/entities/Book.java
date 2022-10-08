@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Audited
-public class Book {
+public class Book extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

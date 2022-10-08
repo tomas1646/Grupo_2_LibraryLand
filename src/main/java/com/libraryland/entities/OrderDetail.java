@@ -13,7 +13,7 @@ import org.hibernate.envers.Audited;
 @NoArgsConstructor
 @Builder
 @Audited
-public class OrderDetail {
+public class OrderDetail extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -28,7 +28,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Audited
-public class Cart {
+public class Cart extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

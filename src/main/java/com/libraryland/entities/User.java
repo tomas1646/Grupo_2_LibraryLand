@@ -31,7 +31,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Audited
-public class User {
+public class User extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -33,7 +33,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Audited
-public class Order {
+public class Order extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

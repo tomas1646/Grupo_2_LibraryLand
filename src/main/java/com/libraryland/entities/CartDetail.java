@@ -26,7 +26,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @Audited
-public class CartDetail {
+public class CartDetail extends Base{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
