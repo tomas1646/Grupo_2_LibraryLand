@@ -14,10 +14,6 @@ import org.hibernate.envers.Audited;
 @Builder
 @Audited
 public class OrderDetail extends Base{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "price")
     private double price;
 

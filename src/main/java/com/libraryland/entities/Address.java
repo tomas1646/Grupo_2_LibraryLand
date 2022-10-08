@@ -25,10 +25,6 @@ import lombok.Setter;
 @Getter
 @Audited
 public class Address extends Base {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     @OneToOne(mappedBy = "address")
     private User user;
 

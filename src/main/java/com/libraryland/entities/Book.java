@@ -18,10 +18,6 @@ import java.util.List;
 @Builder
 @Audited
 public class Book extends Base{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
-
     @Column(name = "name")
     private String name;
 

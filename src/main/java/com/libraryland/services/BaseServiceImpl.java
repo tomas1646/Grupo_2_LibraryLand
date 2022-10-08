@@ -26,6 +26,7 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
             throw new Exception((e.getMessage()));
         }
     }
+
     @Override
     @Transactional
     public Page<E> findAll(Pageable pageable) throws Exception{
@@ -36,6 +37,7 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
             throw new Exception((e.getMessage()));
         }
     }
+
     @Override
     @Transactional
     public E findById(ID id) throws Exception {

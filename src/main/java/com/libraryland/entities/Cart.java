@@ -29,10 +29,6 @@ import lombok.Setter;
 @Getter
 @Audited
 public class Cart extends Base{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "quantity")
     private int quantity;
 

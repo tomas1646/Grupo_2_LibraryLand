@@ -19,10 +19,6 @@ import java.util.List;
 @Builder
 @Audited
 public class Genre extends Base{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
