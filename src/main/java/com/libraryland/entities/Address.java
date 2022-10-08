@@ -25,9 +25,6 @@ import lombok.Setter;
 @Getter
 @Audited
 public class Address extends Base {
-    @OneToOne(mappedBy = "address")
-    private User user;
-
     @Column(name = "city")
     private String city;
 

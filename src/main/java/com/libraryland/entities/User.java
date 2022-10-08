@@ -42,6 +42,13 @@ public class User extends Base{
     @JoinColumn(name = "fk_address")
     private Address address;
 
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password")
     private String password;
 
     @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true, optional = true)
