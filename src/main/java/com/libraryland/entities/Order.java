@@ -5,16 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.envers.Audited;
 
@@ -33,14 +24,14 @@ import lombok.Setter;
 @Setter
 @Getter
 @Audited
-public class Order extends Base{
-    @Column(name = "number")
+public class Order extends Base {
+    @Column(name = "number", nullable = false, unique = true)
     private int number;
 
-    @Column(name = "total")
+    @Column(name = "total", nullable = false)
     private double total;
 
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     private Date date;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

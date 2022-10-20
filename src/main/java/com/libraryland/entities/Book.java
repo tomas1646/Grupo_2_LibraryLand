@@ -17,20 +17,20 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Audited
-public class Book extends Base{
-    @Column(name = "name")
-    private String name;
+public class Book extends Base {
+    @Column(name = "title", nullable = false)
+    private String title;
 
-    @Column(name = "synopsis", length = 2000)
+    @Column(name = "synopsis", length = 2000, nullable = false)
     private String synopsis;
 
-    @Column(name = "publication_year")
+    @Column(name = "publication_year", nullable = false)
     private int publicationYear;
 
-    @Column(name = "stock")
+    @Column(name = "stock", nullable = false)
     private int stock;
 
-    @Column(name = "price", precision = 8, scale = 2)
+    @Column(name = "price", precision = 8, scale = 2, nullable = false)
     private float price;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -53,6 +53,6 @@ public class Book extends Base{
     //cascade type dudoso. Revisar. Que pas acon las ordenes cuando se borra el book?
     private List<CartDetail> cartDetails = new ArrayList<CartDetail>();
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL) //cascade type dudoso. Revisar 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL) //cascade type dudoso. Revisar
     private List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 }

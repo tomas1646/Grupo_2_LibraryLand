@@ -67,4 +67,22 @@ public abstract class BaseControllerImpl<E extends Base, S extends BaseServiceIm
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error. Por favor intente mas tarde \"}");
         }
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> search(@RequestParam String filtro) {
+        try {
+            return ResponseEntity.ok(service.search(filtro));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage() + "\"}"));
+        }
+    }
+
+    @GetMapping("/searchPaged")
+    public ResponseEntity<?> search(@RequestParam String filtro, Pageable pageable) {
+        try {
+            return ResponseEntity.ok(service.search(filtro, pageable));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(("{\"error\": \"" + e.getMessage() + "\"}"));
+        }
+    }
 }

@@ -2,7 +2,6 @@ package com.libraryland.services;
 
 import com.libraryland.entities.Base;
 import com.libraryland.repositories.BaseRepository;
-import com.libraryland.repositories.UserRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +21,7 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
     @Transactional
     public List<E> findAll() throws Exception {
         try {
-            List<E> entities = baseRepository.findAll();
-            return entities;
+            return baseRepository.findAll();
         } catch (Exception e) {
             throw new Exception((e.getMessage()));
         }
@@ -33,8 +31,7 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
     @Transactional
     public Page<E> findAll(Pageable pageable) throws Exception{
         try {
-            Page<E> entities = baseRepository.findAll(pageable);
-            return entities;
+            return baseRepository.findAll(pageable);
         } catch (Exception e) {
             throw new Exception((e.getMessage()));
         }
@@ -92,9 +89,8 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
     }
     @Override
     public List<E> search(String filtro) throws Exception {
-        try {            
-            List<E> localidades = baseRepository.search(filtro);
-            return localidades;
+        try {
+            return baseRepository.search(filtro);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -102,9 +98,8 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
 
     @Override
     public Page<E> search(String filtro, Pageable pageable) throws Exception {
-        try {            
-            Page<E> localidades = baseRepository.search(filtro,pageable);
-            return localidades;
+        try {
+            return baseRepository.search(filtro,pageable);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }        

@@ -13,11 +13,11 @@ import org.hibernate.envers.Audited;
 @NoArgsConstructor
 @Builder
 @Audited
-public class OrderDetail extends Base{
-    @Column(name = "price")
+public class OrderDetail extends Base {
+    @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

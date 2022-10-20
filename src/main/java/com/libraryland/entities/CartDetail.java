@@ -3,9 +3,6 @@ package com.libraryland.entities;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -26,11 +23,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @Audited
-public class CartDetail extends Base{
-    @Column(name = "quantity")
+public class CartDetail extends Base {
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private double price;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

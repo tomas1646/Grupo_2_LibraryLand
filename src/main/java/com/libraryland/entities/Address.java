@@ -2,10 +2,6 @@ package com.libraryland.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
@@ -25,12 +21,12 @@ import lombok.Setter;
 @Getter
 @Audited
 public class Address extends Base {
-    @Column(name = "city")
+    @Column(name = "city", nullable = false)
     private String city;
 
-    @Column(name = "street")
+    @Column(name = "street", nullable = false)
     private String street;
 
-    @Column(name = "number")
+    @Column(name = "number", nullable = false)
     private int number;
 }

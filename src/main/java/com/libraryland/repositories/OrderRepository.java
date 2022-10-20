@@ -11,10 +11,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrderRepository extends BaseRepository<Order,Long> {
-    @Query(value = "SELECT p FROM Order p WHERE p.number = cast(:filtro as int)")
+public interface OrderRepository extends BaseRepository<Order, Long> {
+    @Query(value = "SELECT p FROM Order p WHERE p.number = cast(:filtro as int) OR p.total = cast(:filtro as int)")
     List<Order> search(@Param("filtro") String filtro);
 
-    @Query(value = "SELECT p FROM User p WHERE p.firstname LIKE %:filtro% OR p.lastname LIKE %:filtro% OR p.username LIKE %:filtro%")
+    @Query(value = "SELECT p FROM Order p WHERE p.number = cast(:filtro as int) OR p.total = cast(:filtro as int)")
     Page<Order> search(@Param("filtro") String filtro, Pageable pageable);
 }
