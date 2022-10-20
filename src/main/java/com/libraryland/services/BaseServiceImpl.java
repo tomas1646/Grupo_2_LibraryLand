@@ -2,6 +2,8 @@ package com.libraryland.services;
 
 import com.libraryland.entities.Base;
 import com.libraryland.repositories.BaseRepository;
+import com.libraryland.repositories.UserRepository;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -88,4 +90,23 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
             throw new Exception(e.getMessage());
         }
     }
+    @Override
+    public List<E> search(String filtro) throws Exception {
+        try {            
+            List<E> localidades = baseRepository.search(filtro);
+            return localidades;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public Page<E> search(String filtro, Pageable pageable) throws Exception {
+        try {            
+            Page<E> localidades = baseRepository.search(filtro,pageable);
+            return localidades;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }        
+    } 
 }

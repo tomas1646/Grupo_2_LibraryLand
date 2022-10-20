@@ -30,7 +30,7 @@ import lombok.Setter;
 @Audited
 public class Cart extends Base{
     @Column(name = "quantity")
-    private int quantity;
+    private int quantity; //cantidad de libros en el carrito
 
     @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
     private List<CartDetail> details = new ArrayList<>();
