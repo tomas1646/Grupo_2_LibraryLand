@@ -1,5 +1,6 @@
 package com.libraryland.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Audited
+@JsonIgnoreProperties(value = {"cartDetails", "orderDetails"})
 public class Book extends Base {
     @Column(name = "title", nullable = false)
     private String title;
@@ -33,7 +35,7 @@ public class Book extends Base {
     @Column(name = "price", precision = 8, scale = 2, nullable = false)
     private float price;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "book_genre",
             joinColumns = @JoinColumn(name = "fk_book"),
@@ -41,7 +43,7 @@ public class Book extends Base {
     )
     private List<Genre> genres = new ArrayList();
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "fk_book"),
@@ -49,10 +51,10 @@ public class Book extends Base {
     )
     private List<Author> authors = new ArrayList();
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.MERGE)
     //cascade type dudoso. Revisar. Que pas acon las ordenes cuando se borra el book?
     private List<CartDetail> cartDetails = new ArrayList<CartDetail>();
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL) //cascade type dudoso. Revisar
+    @OneToMany(mappedBy = "book", cascade = CascadeType.MERGE) //cascade type dudoso. Revisar
     private List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 }

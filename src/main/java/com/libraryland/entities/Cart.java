@@ -3,11 +3,7 @@ package com.libraryland.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.envers.Audited;
 
@@ -25,10 +21,26 @@ import lombok.Setter;
 @Setter
 @Getter
 @Audited
-public class Cart extends Base{
+public class Cart extends Base {
     @Column(name = "quantity", nullable = false)
     private int quantity; //cantidad de libros en el carrito
 
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "fk_user", nullable = false)
+    private User user;
+
     @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
+    @Builder.Default
     private List<CartDetail> details = new ArrayList<>();
+
+    //Esto es para establecer la bidireccionalidad. Con el metodo generico solo no funciona.
+    public void addCartDetails(List<CartDetail> details) {
+        for (CartDetail detail : details) {
+            detail.setCart(this);
+        }
+    }
+
+    public void addUser() {
+        this.user.setCart(this);
+    }
 }

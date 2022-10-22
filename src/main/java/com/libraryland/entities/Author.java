@@ -1,5 +1,6 @@
 package com.libraryland.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.envers.Audited;
 
@@ -14,12 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Audited
-public class Author extends Base{
+@JsonIgnoreProperties(value = {"books"})
+public class Author extends Base {
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "biography", length = 2000, nullable = false)
+    private String biography;
 
     @ManyToMany(mappedBy = "authors")
     @Builder.Default

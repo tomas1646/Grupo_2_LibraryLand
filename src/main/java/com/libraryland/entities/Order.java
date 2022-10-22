@@ -34,11 +34,18 @@ public class Order extends Base {
     @Column(name = "date", nullable = false)
     private Date date;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE, optional = false)
     @JoinColumn(name = "fk_user")
     private User user;
 
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
     @Builder.Default
     private List<OrderDetail> details = new ArrayList<>();
+
+    //Esto es para establecer la bidireccionalidad. Con el metodo generico solo no funciona.
+    public void addOrderDetails(List<OrderDetail> details) {
+        for (OrderDetail detail : details) {
+            detail.setOrder(this);
+        }
+    }
 }

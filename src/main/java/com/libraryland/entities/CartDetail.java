@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.envers.Audited;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @Audited
+@JsonIgnoreProperties(value = {"cart"})
 public class CartDetail extends Base {
     @Column(name = "quantity", nullable = false)
     private int quantity;
@@ -30,11 +32,11 @@ public class CartDetail extends Base {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "fk_cart")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_cart", nullable = false)
     private Cart cart;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "fk_book")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "fk_book", nullable = false)
     private Book book;
 }

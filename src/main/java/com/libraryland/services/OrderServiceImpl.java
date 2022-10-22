@@ -6,6 +6,8 @@ import com.libraryland.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements OrderService {
     @Autowired
@@ -13,5 +15,17 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
 
     public OrderServiceImpl(BaseRepository<Order, Long> baseRepository) {
         super(baseRepository);
+    }
+
+    @Override
+    @Transactional
+    public Order save(Order order) throws Exception {
+        try {
+            order.addOrderDetails(order.getDetails());
+            order = baseRepository.save(order);
+            return order;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 }

@@ -1,9 +1,11 @@
 package com.libraryland.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -18,10 +20,12 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Audited
-public class Genre extends Base{
+@JsonIgnoreProperties(value = {"books"})
+public class Genre extends Base {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "genres")
+    @Builder.Default
     private List<Book> books = new ArrayList<>();
 }

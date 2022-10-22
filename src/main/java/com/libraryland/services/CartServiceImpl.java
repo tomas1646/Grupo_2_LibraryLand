@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -28,5 +29,18 @@ public class CartServiceImpl extends BaseServiceImpl<Cart, Long> implements Cart
     @Override
     public Page<Cart> search(String filtro, Pageable pageable) throws ExecutionControl.NotImplementedException {
         throw new ExecutionControl.NotImplementedException("Not implemented yet");
+    }
+
+    @Override
+    @Transactional
+    public Cart save(Cart cart) throws Exception {
+        try {
+            cart.addCartDetails(cart.getDetails());
+            cart.addUser();
+            cart = baseRepository.save(cart);
+            return cart;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 }

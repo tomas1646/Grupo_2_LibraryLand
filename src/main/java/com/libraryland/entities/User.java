@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.envers.Audited;
 
 
@@ -28,6 +29,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Audited
+@JsonIgnoreProperties(value = {"orders"})
 public class User extends Base {
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -48,11 +50,12 @@ public class User extends Base {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true, optional = true)
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
     @JoinColumn(name = "fk_cart")
     private Cart cart;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.REMOVE},orphanRemoval = false) //no quiero que la orden pendiente se me elimine no?
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = false)
+    //no quiero que la orden pendiente se me elimine no?
     @Builder.Default
     private List<Order> orders = new ArrayList<Order>();
 }
