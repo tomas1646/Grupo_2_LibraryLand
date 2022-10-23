@@ -35,7 +35,7 @@ public class Book extends Base {
     @Column(name = "price", precision = 8, scale = 2, nullable = false)
     private float price;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(
             name = "book_genre",
             joinColumns = @JoinColumn(name = "fk_book"),
@@ -43,7 +43,7 @@ public class Book extends Base {
     )
     private List<Genre> genres = new ArrayList();
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "fk_book"),

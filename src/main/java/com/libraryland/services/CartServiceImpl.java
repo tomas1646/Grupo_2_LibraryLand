@@ -36,7 +36,6 @@ public class CartServiceImpl extends BaseServiceImpl<Cart, Long> implements Cart
     public Cart save(Cart cart) throws Exception {
         try {
             cart.addCartDetails(cart.getDetails());
-            cart.addUser();
             cart = baseRepository.save(cart);
             return cart;
         } catch (Exception e) {

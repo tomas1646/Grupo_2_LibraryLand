@@ -25,7 +25,7 @@ public class Cart extends Base {
     @Column(name = "quantity", nullable = false)
     private int quantity; //cantidad de libros en el carrito
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = {CascadeType.REFRESH})
     @JoinColumn(name = "fk_user", nullable = false)
     private User user;
 
@@ -38,9 +38,5 @@ public class Cart extends Base {
         for (CartDetail detail : details) {
             detail.setCart(this);
         }
-    }
-
-    public void addUser() {
-        this.user.setCart(this);
     }
 }

@@ -34,8 +34,8 @@ public class Order extends Base {
     @Column(name = "date", nullable = false)
     private Date date;
 
-    @ManyToOne(cascade = CascadeType.MERGE, optional = false)
-    @JoinColumn(name = "fk_user")
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "fk_user", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)

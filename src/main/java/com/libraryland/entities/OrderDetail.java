@@ -3,6 +3,7 @@ package com.libraryland.entities;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.*;
 import org.hibernate.envers.Audited;
 
@@ -14,7 +15,6 @@ import org.hibernate.envers.Audited;
 @NoArgsConstructor
 @Builder
 @Audited
-@JsonIgnoreProperties(value = {"order"})
 public class OrderDetail extends Base {
     @Column(name = "price", nullable = false)
     private double price;
@@ -22,11 +22,12 @@ public class OrderDetail extends Base {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "details", nullable = false)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "fk_order", nullable = false)
+    @JsonIncludeProperties(value = {"id"})
     private Order order;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "fk_book", nullable = false)
     private Book book;
 }
