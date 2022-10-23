@@ -26,7 +26,7 @@ public class Cart extends Base {
     private int quantity; //cantidad de libros en el carrito
 
     @OneToOne(cascade = {CascadeType.REFRESH})
-    @JoinColumn(name = "fk_user", nullable = false)
+    @JoinColumn(name = "fk_user", nullable = false, unique = true)
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)

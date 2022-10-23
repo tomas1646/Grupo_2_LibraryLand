@@ -52,7 +52,7 @@ public class User extends Base {
     private String password;
 
     @OneToOne(cascade = {CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "user")
-    @JoinColumn(name = "fk_cart")
+    @JoinColumn(name = "fk_cart", unique = true)
     @JsonIncludeProperties(value = {"id"})
     private Cart cart;
 
