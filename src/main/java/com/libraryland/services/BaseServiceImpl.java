@@ -6,17 +6,22 @@ import com.libraryland.repositories.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> implements BaseService<E, ID> {
-    protected BaseRepository<E,ID> baseRepository;
+    protected BaseRepository<E, ID> baseRepository;
 
-    public BaseServiceImpl(BaseRepository<E, ID> baseRepository) {
+    private final EntityManager entityManager;
+
+    public BaseServiceImpl(BaseRepository<E, ID> baseRepository, EntityManager entityManager) {
         this.baseRepository = baseRepository;
+        this.entityManager = entityManager;
     }
+
     @Override
     @Transactional
     public List<E> findAll() throws Exception {
@@ -29,7 +34,7 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
 
     @Override
     @Transactional
-    public Page<E> findAll(Pageable pageable) throws Exception{
+    public Page<E> findAll(Pageable pageable) throws Exception {
         try {
             return baseRepository.findAll(pageable);
         } catch (Exception e) {
@@ -53,6 +58,8 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
     public E save(E entity) throws Exception {
         try {
             entity = baseRepository.save(entity);
+            baseRepository.flush();
+            refresh(entity);
             return entity;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
@@ -64,9 +71,7 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
     public E update(ID id, E entity) throws Exception {
         try {
             Optional<E> entityOptional = baseRepository.findById(id);
-            E entityUpdate = entityOptional.get();
-            entityUpdate = baseRepository.save(entity);
-            return entityUpdate;
+            return baseRepository.save(entity);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -87,6 +92,7 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
             throw new Exception(e.getMessage());
         }
     }
+
     @Override
     public List<E> search(String filtro) throws Exception {
         try {
@@ -99,9 +105,15 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
     @Override
     public Page<E> search(String filtro, Pageable pageable) throws Exception {
         try {
-            return baseRepository.search(filtro,pageable);
+            return baseRepository.search(filtro, pageable);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
-        }        
-    } 
+        }
+    }
+
+    @Override
+    @Transactional
+    public void refresh(E e) {
+        entityManager.refresh(e);
+    }
 }

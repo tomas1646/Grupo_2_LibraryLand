@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class CartServiceImpl extends BaseServiceImpl<Cart, Long> implements Cart
     @Autowired
     private CartRepository cartRepository;
 
-    public CartServiceImpl(BaseRepository<Cart, Long> baseRepository) {
-        super(baseRepository);
+    public CartServiceImpl(BaseRepository<Cart, Long> baseRepository, EntityManager entityManager) {
+        super(baseRepository, entityManager);
     }
 
     @Override
@@ -37,6 +38,8 @@ public class CartServiceImpl extends BaseServiceImpl<Cart, Long> implements Cart
         try {
             cart.addCartDetails(cart.getDetails());
             cart = baseRepository.save(cart);
+            baseRepository.flush();
+            refresh(cart);
             return cart;
         } catch (Exception e) {
             throw new Exception(e.getMessage());

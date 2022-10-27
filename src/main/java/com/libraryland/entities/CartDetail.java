@@ -38,5 +38,6 @@ public class CartDetail extends Base {
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "fk_book", nullable = false)
+    @JsonIncludeProperties(value = {"id", "title"})
     private Book book;
 }
