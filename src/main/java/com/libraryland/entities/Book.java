@@ -32,6 +32,9 @@ public class Book extends Base {
     @Column(name = "stock", nullable = false)
     private int stock;
 
+    @Column(name="image_src", nullable = false, length = 2048)
+    private String imageSrc;
+
     @Column(name = "price", precision = 8, scale = 2, nullable = false)
     private float price;
 
