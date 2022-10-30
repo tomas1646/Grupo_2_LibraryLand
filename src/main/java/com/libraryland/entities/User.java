@@ -37,7 +37,7 @@ public class User extends Base {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_address", nullable = false)
     private Address address;
 
