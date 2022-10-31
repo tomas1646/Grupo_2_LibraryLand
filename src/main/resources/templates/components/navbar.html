@@ -1,0 +1,23 @@
+<nav th:fragment="nav_bar" class="border-bottom border-dark border-3 navbar navbar-expand-lg bg-orange px-0 fixed-top">
+    <ul class="navbar-nav mx-5 w-100">
+        <li class="nav-item">            
+            <a class="navbar-brand logo" th:href="@{/inicio}">LibraryLand</a>
+        </li>
+        <li class="nav-item input-group px-5 mx-auto my-auto d-inline w-50" id="navbarSupportedContent">
+            <form class="form-inline my-2 my-lg-0" th:action="@{/busqueda}">
+                <div class="input-group">
+                    <input class="form-control border-0" type="text" placeholder="Buscar" aria-label="Search" name="query">
+                    <Button class="btn input-group-append" type="submit" style="background-color: white;">
+                        <i class="fa fa-search" style="color: grey;" aria-hidden="true"></i>
+                    </Button>
+                </div>                
+            </form>                        
+        </li> 
+        <li class="my-auto px-0 mx-2 float-md-end">
+            <Button class="btn navbar-text" type="submit">Ingresar</Button>
+        </li>               
+        <li class="my-auto px-0 mx-2 float-md-end">
+            <Button class="btn navbar-text" type="submit">Registrarse</Button>
+        </li>
+    </ul>    
+</nav>
