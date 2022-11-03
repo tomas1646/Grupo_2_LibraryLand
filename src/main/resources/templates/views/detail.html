@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="components/headers :: headerfiles">
     </th:block>
 </head>
 <body>
 <nav th:replace="components/navbar :: nav_bar"></nav>
-<h1>Error!</h1>
+<h3>Id:</h3>
+<h3 th:text="${book.id}"></h3>
+<h3>Titulo:</h3>
+<h3 th:text="${book.title}"></h3>
 </body>
 </html>

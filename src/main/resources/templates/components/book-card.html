@@ -1,19 +1,19 @@
-
-
 <div th:fragment="book_card" th:each="book : ${books}" class="col-3">
-  <div class="card">
-    <img th:src="${book.imageSrc}" class="card-img-top img-fluid book-card-image" th:alt="${book.title}">
-    <div class="card-body">
-      <h5 th:text="${book.title}" class="card-title">Card title</h5>
-      <h6 class="card-subtitle mb-2">
+    <div class="card">
+
+        <img th:src="${book.imageSrc}" class="card-img-top img-fluid book-card-image" th:alt="${book.title}">
+        <div class="card-body">
+            <h5 th:text="${book.title}" class="card-title">Card title</h5>
+            <h6 class="card-subtitle mb-2">
                 <span th:each="author : ${book.authors}">
                     <a th:text="${author.fullName}" th:href="@{authors/{id}(id=${author.id})}"></a> &nbsp;
                 </span>
-      </h6>
-      <p th:text="${book.synopsis}" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <h4>$<span th:text="${book.price}" class="card-subtitle mb-2 text-muted">Card subtitle</span></h4>
-      <a href="#" class="card-link">Detalle</a>
-      <a href="#" class="card-link">Comprar</a>
+            </h6>
+            <p th:text="${book.synopsis}" class="card-text">Some quick example text to build on the card title and make
+                up the bulk of the card's content.</p>
+            <h4>$<span th:text="${book.price}" class="card-subtitle mb-2 text-muted">Card subtitle</span></h4>
+            <a href="#" th:href="@{/detail/{id}(id=${book.id})}" class="card-link">Detalle</a>
+            <a href="#" class="card-link">Comprar</a>
+        </div>
     </div>
-  </div>
 </div>
