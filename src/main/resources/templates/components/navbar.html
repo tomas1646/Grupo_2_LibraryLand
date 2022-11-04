@@ -6,18 +6,34 @@
         <li class="nav-item input-group px-5 mx-auto my-auto d-inline w-50" id="navbarSupportedContent">
             <form class="form-inline my-2 my-lg-0" th:action="@{/search}">
                 <div class="input-group">
-                    <input class="form-control border-0" type="text" placeholder="Buscar" aria-label="Search" name="filtro">
+                    <input class="form-control border-0" type="text" placeholder="Buscar" aria-label="Search"
+                           name="filtro">
                     <Button class="btn input-group-append" type="submit" style="background-color: white;">
                         <i class="fa fa-search" style="color: grey;" aria-hidden="true"></i>
                     </Button>
                 </div>
             </form>
         </li>
-        <li class="my-auto px-0 mx-2 float-md-end">
-            <Button class="btn navbar-text" type="submit">Ingresar</Button>
-        </li>
-        <li class="my-auto px-0 mx-2 float-md-end">
-            <Button class="btn navbar-text" type="submit">Registrarse</Button>
-        </li>
+
+        <!-- NavBar for Authenticated Users -->
+        <th:block sec:authorize="isAuthenticated()">
+            <li class="my-auto px-0 mx-2 float-md-end">
+                <h3 class="navbar-text">Usuario: <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+                </h3>
+            </li>
+            <li class="my-auto px-0 mx-2 float-md-end">
+                <a class="btn navbar-text" th:href="@{/perform_logout}">Cerrar Sesión</a>
+            </li>
+        </th:block>
+
+        <!-- NavBar for Not-Authenticated Users -->
+        <th:block sec:authorize="isAnonymous()">
+            <li class="my-auto px-0 mx-2 float-md-end">
+                <a class="btn navbar-text" th:href="@{/login}">Ingresar</a>
+            </li>
+            <li class="my-auto px-0 mx-2 float-md-end">
+                <Button class="btn navbar-text" type="submit">Registrarse</Button>
+            </li>
+        </th:block>
     </ul>
 </nav>

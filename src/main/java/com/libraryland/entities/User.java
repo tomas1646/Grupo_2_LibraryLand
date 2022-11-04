@@ -51,6 +51,9 @@ public class User extends Base {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @Column(name = "roles")
+    private String roles;
+
     @OneToOne(cascade = {CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "user")
     @JoinColumn(name = "fk_cart", unique = true)
     @JsonIncludeProperties(value = {"id"})
