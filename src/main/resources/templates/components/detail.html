@@ -1,0 +1,7 @@
+<div th:fragment="_detail" class="card m-4 d-flex">
+    <img th:src="${book.imageSrc}" class="card-img-top img-fluid book-card-image" th:alt="${book.title}">
+    <h3>Id:</h3>
+    <h3 th:text="${book.id}"></h3>
+    <h3>Titulo:</h3>
+    <h3 th:text="${book.title}"></h3>
+</div>

@@ -6,9 +6,8 @@
 </head>
 <body>
 <nav th:replace="components/navbar :: nav_bar"></nav>
-<h3>Id:</h3>
-<h3 th:text="${book.id}"></h3>
-<h3>Titulo:</h3>
-<h3 th:text="${book.title}"></h3>
+
+    <div th:replace="components/detail :: _detail"></div>
+
 </body>
 </html>
