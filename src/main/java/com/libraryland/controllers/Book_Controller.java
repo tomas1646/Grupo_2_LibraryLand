@@ -1,7 +1,12 @@
 package com.libraryland.controllers;
 
+import com.libraryland.entities.Author;
 import com.libraryland.entities.Book;
+import com.libraryland.entities.Genre;
+import com.libraryland.services.AuthorServiceImpl;
 import com.libraryland.services.BookServiceImpl;
+import com.libraryland.services.GenreServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +27,10 @@ public class Book_Controller {
 
     @Autowired
     protected BookServiceImpl bookService;
+    @Autowired
+    protected GenreServiceImpl genreService;
+    @Autowired
+    protected AuthorServiceImpl authorService;
 
     @GetMapping("")
     public String index(@RequestParam Map<String, Object> params, Model model) {
@@ -29,7 +38,8 @@ public class Book_Controller {
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
         PageRequest pageRequest = PageRequest.of(page, 20);
         Page<Book> books = null;
-
+        List<Author> allAuthors;         
+        List<Genre> allGenres;
         try {
             books = bookService.findAll(pageRequest);
             model.addAttribute("books", books);
@@ -43,7 +53,10 @@ public class Book_Controller {
                 model.addAttribute("prevPage", page);
                 model.addAttribute("lastPage", totalPages);
             }
-
+            allAuthors = authorService.findAll();
+            allGenres = genreService.findAll();
+            model.addAttribute("authors", allAuthors);
+            model.addAttribute("genres", allGenres);
             return "index";
         } catch (Exception e) {
             return "error";

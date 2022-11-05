@@ -10,8 +10,11 @@
                             <a th:text="${author.fullName}" th:href="@{authors/{id}(id=${author.id})}"></a> &nbsp;
                         </span>
                     </h6>
-                    <h4>$<span th:text="${book.price}" class="card-subtitle mb-2 text-muted">Card subtitle</span></h4>
-                    <a class="btn btn-warning" href="#" role="button">Comprar</i></a>
+                    <h4>$<span th:text="${book.price}" class="card-subtitle mb-2 text-muted">Card subtitle</span>
+                        <a class="btn btn-warning bg-orange px-2 py-1" href="#" role="button">
+                            <i class="fa fa-cart-plus fa-lg" style="color:white" aria-hidden="true"></i>
+                        </a>                
+                    </h4>      
 
                 </div>
             </div>

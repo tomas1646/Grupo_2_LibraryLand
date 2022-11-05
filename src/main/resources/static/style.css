@@ -3,6 +3,10 @@
  .bg-orange{    
     background-color: #FF8E3C;    
  }
+
+ .bg-grey{
+   background-color: #D9D9D9;
+ }
  
  @font-face {
     font-family: parisienne;
@@ -22,6 +26,15 @@
     font-size: 25px;
     line-height: 38px;    
     color: #FFFFFF;
+ }
+
+ .filtersbar-text{
+   font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 38px;    
+    color: black;
  }
 
  .footer{
