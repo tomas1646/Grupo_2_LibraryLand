@@ -1,0 +1,18 @@
+<div th:fragment="filters_bar" class="dropdown bg-grey">
+    <button class="btn filtersbar-text rounded-0 border-0 ms-5" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Temáticas
+        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li th:each = "genre : ${genres}"><a class="dropdown-item" href="#" th:text="${genre.name}"></a></li>        
+    </ul>
+    <button class="btn filtersbar-text rounded-0 border-0 ms-5" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Autores
+        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li th:each = "author : ${authors}"><a class="dropdown-item" href="#" th:text="${author.fullName}"></a></li>        
+    </ul>    
+</div>

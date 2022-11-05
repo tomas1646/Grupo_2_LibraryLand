@@ -29,14 +29,18 @@ public class DBInitializer {
     private void initializeDB() {
         // Initialize tasks
         Genre genre1 = createGenre("Fiction", 1L);
-        createGenre("Non-Fiction", 2L);
-        createGenre("Sciencie Fiction", 3L);
-        createGenre("Fantasy", 4L);
+        Genre genre2 = createGenre("Non-Fiction", 2L);
+        Genre genre3 = createGenre("Sciencie Fiction", 3L);
+        Genre genre4 = createGenre("Fantasy", 4L);
+        Genre genre5 = createGenre("Novel", 5L);
+        Genre genre6 = createGenre("Philosophical novel", 6L);
 
-        Author author = createAuthor("J. K. Rowling", "Joanne Rowling, better known by her pen name J. K. Rowling, is a British author, philanthropist, film producer, television producer, and screenwriter. She is best known for writing the Harry Potter fantasy series, which has won multiple awards and sold more than 500 million copies, becoming the best-selling book series in history. The books are the basis of a popular film series, over which Rowling had overall approval on the scripts and was a producer on the final films. She also writes crime fiction under the pen name Robert Galbraith.", 1L);
-        createAuthor("Stephen King", "Stephen Edwin King is an American author of horror, supernatural fiction, suspense, and fantasy novels. His books have sold more than 350 million copies, and many have been adapted into films, television series, miniseries, and comic books. King has published 54 novels, including seven under the pen name Richard Bachman and six non-fiction books. He has written nearly 200 short stories, most of which have been collected in book collections. Many of his stories are set in his home state of Maine.", 2L);
-        createAuthor("George R. R. Martin", "George Raymond Richard Martin is an American novelist and short-story writer in the fantasy, horror, and science fiction genres, screenwriter, and television producer. He is best known for his series of epic fantasy novels, A Song of Ice and Fire, which was later adapted into the HBO series Game of Thrones. Martin has won numerous awards for his work, including five Hugo Awards, two Nebula Awards, and a Bram Stoker Award. He was inducted into the Science Fiction and Fantasy Hall of Fame in 2014.", 3L);
-        createAuthor("J. R. R. Tolkien", "John Ronald Reuel Tolkien, CBE was an English writer, poet, philologist, and university professor who is best known as the author of the classic high fantasy works The Hobbit, The Lord of the Rings, and The Silmarillion. He served as the Rawlinson and Bosworth Professor of Anglo-Saxon at the University of Oxford from 1925 to 1945 and Merton Professor of English Language and Literature at Oxford from 1945 to 1959. He was a close friend of C. S. Lewis—they were both members of the informal literary discussion group known as the Inklings. Tolkien was appointed a Commander of the Order of the British Empire by Queen Elizabeth II on 28 March 1972.", 4L);
+        Author author1 = createAuthor("J. K. Rowling", "Joanne Rowling, better known by her pen name J. K. Rowling, is a British author, philanthropist, film producer, television producer, and screenwriter. She is best known for writing the Harry Potter fantasy series, which has won multiple awards and sold more than 500 million copies, becoming the best-selling book series in history. The books are the basis of a popular film series, over which Rowling had overall approval on the scripts and was a producer on the final films. She also writes crime fiction under the pen name Robert Galbraith.", 1L);
+        Author author2 = createAuthor("Stephen King", "Stephen Edwin King is an American author of horror, supernatural fiction, suspense, and fantasy novels. His books have sold more than 350 million copies, and many have been adapted into films, television series, miniseries, and comic books. King has published 54 novels, including seven under the pen name Richard Bachman and six non-fiction books. He has written nearly 200 short stories, most of which have been collected in book collections. Many of his stories are set in his home state of Maine.", 2L);
+        Author author3 = createAuthor("George R. R. Martin", "George Raymond Richard Martin is an American novelist and short-story writer in the fantasy, horror, and science fiction genres, screenwriter, and television producer. He is best known for his series of epic fantasy novels, A Song of Ice and Fire, which was later adapted into the HBO series Game of Thrones. Martin has won numerous awards for his work, including five Hugo Awards, two Nebula Awards, and a Bram Stoker Award. He was inducted into the Science Fiction and Fantasy Hall of Fame in 2014.", 3L);
+        Author author4 = createAuthor("J. R. R. Tolkien", "John Ronald Reuel Tolkien, CBE was an English writer, poet, philologist, and university professor who is best known as the author of the classic high fantasy works The Hobbit, The Lord of the Rings, and The Silmarillion. He served as the Rawlinson and Bosworth Professor of Anglo-Saxon at the University of Oxford from 1925 to 1945 and Merton Professor of English Language and Literature at Oxford from 1945 to 1959. He was a close friend of C. S. Lewis—they were both members of the informal literary discussion group known as the Inklings. Tolkien was appointed a Commander of the Order of the British Empire by Queen Elizabeth II on 28 March 1972.", 4L);
+        Author author5 = createAuthor("Julio Cortazar", "Julio Cortázar, pseudonym Julio Denis, (born August 26, 1914, Brussels, Belgium—died February 12, 1984, Paris, France), Argentine novelist and short-story writer who combined existential questioning with experimental writing techniques in his works.", 5L);
+        Author author6 = createAuthor("Albert Camus", "Albert Camus, (born November 7, 1913, Mondovi, Algeria—died January 4, 1960, near Sens, France), French novelist, essayist, and playwright, best known for such novels as L’Étranger (1942; The Stranger), La Peste (1947; The Plague), and La Chute (1956; The Fall) and for his work in leftist causes. He received the 1957 Nobel Prize for Literature.", 6L);
 
 
         Address address = Address.builder().city("Mendoza").street("Colon").number(178).build();
@@ -61,9 +65,21 @@ public class DBInitializer {
         List<Genre> genres = new ArrayList<>();
         genres.add(genre1);
         List<Author> authors = new ArrayList<>();
-        authors.add(author);
+        authors.add(author1);
         createBook("Harry Potter and the Philosopher's Stone", "Harry Potter and the Philosopher's Stone is a fantasy novel written by British author J. K. Rowling. The first novel in the Harry Potter series and Rowling's debut novel, it follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday, when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. Harry makes close friends and a few enemies during his first year at the school, and with the help of his friends, he faces an attempted comeback by the dark wizard Lord Voldemort, who killed Harry's parents, but failed to kill Harry when he was just 15 months old.", 2001, 20, "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg", 5252F, genres, authors, 1L);
 
+        genres.clear();
+        authors.clear();
+        genres.add(genre5);
+        authors.add(author5);
+        createBook("Rayuela", "Hopscotch is an account of the misadventures of Horacio Oliveira, a discontent Argentinean intellectual in his forties. He wanders 1950s Paris with his mistress La Maga and a band of bohemian cohorts, but a series of missteps and personal tragedies send him packing back to Buenos Aires.", 1963, 10, "https://3.bp.blogspot.com/-SD6hC4jfo-c/V3fOjz3RcTI/AAAAAAAAAVQ/3z9D1W0EF4kl45zn7f4vREyhTZkCZtqJgCLcB/s1600/9789875782211.jpg", 3000F, genres, authors, 2L);
+
+        genres.clear();
+        authors.clear();
+        genres.add(genre5);
+        genres.add(genre6);
+        authors.add(author6);
+        createBook("The Stranger", "Meursault, the narrator, is a young man living in Algiers. After receiving a telegram informing him of his mother’s death, he takes a bus to Marengo, where his mother had been living in an old persons’ home. He sleeps for almost the entire trip. When he arrives, he speaks to the director of the home. The director allows Meursault to see his mother, but Meursault finds that her body has already been sealed in the coffin. He declines the caretaker’s offer to open the coffin.", 1942, 5, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1590930002i/49552._UY2400_SS2400_.jpg", 2000F, genres, authors, 3L);
     }
 
     public Genre createGenre(String name, Long id) {

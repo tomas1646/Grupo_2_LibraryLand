@@ -6,7 +6,7 @@
 </head>
 <body>
 <nav th:replace="components/navbar :: nav_bar"></nav>
-
+<div th:replace="components/filtersBar :: filters_bar"></div>
 
 <div th:if="${books.size}">
         <div th:replace="components/book-card :: book_card"></div>
