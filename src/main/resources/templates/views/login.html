@@ -3,26 +3,38 @@
 <head>
     <th:block th:replace="components/headers :: headerfiles">
     </th:block>
+    <link th:href="@{/formStyle.css}" rel="stylesheet"/>
 </head>
 <body>
 <nav th:replace="components/navbar :: nav_bar"></nav>
+<div class="d-flex align-content-center" style="height: 100vh">
+    <div class="container form-container">
+        <div class="form-card">
+            <h2 class="text-center mb-5 logo" style="color: black">LibraryLand</h2>
 
-<h1>Login</h1>
-<form name='f' action="perform_login" method='POST'>
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><input type='text' name='username' value=''></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password'/></td>
-        </tr>
-        <tr>
-            <td><input name="submit" type="submit" value="submit"/></td>
-        </tr>
-    </table>
-</form>
+            <div class="container" style="max-width: 650px">
+                <form name='f' action="perform_login" method='POST' autocomplete="off">
+
+                    <input type="text" class="form-control mb-4 form-input" name='username' placeholder="Usuario">
+
+                    <input type="password" class="form-control mb-4 form-input" name='password'
+                           placeholder="Contraseña">
+
+                    <th:block th:if="${param.keySet().contains('error')}">
+                        <div class="alert alert-danger" role="alert">
+                            Usuario o contraseña incorrecto
+                        </div>
+                    </th:block>
+                    <div class="form-submit-container">
+                        <button type="submit" class="btn btn-primary form-submit-button">Ingresar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>

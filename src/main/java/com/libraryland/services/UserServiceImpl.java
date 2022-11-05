@@ -5,7 +5,9 @@ import com.libraryland.entities.UserDetailsWrapper;
 import com.libraryland.repositories.BaseRepository;
 import com.libraryland.repositories.UserRepository;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import javax.validation.ValidationException;
 import java.util.Optional;
 
 @Service
@@ -32,6 +35,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
             user.setRoles("USER");
             user = userRepository.save(user);
             return user;
+        } catch (DataIntegrityViolationException e) {
+            ConstraintViolationException cause = (ConstraintViolationException) e.getCause();
+            throw new ValidationException(cause.getCause().getLocalizedMessage());
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

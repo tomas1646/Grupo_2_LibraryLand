@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="components/headers :: headerfiles">
+    </th:block>
+    <link th:href="@{/formStyle.css}" rel="stylesheet"/>
+</head>
+<body>
+<nav th:replace="components/navbar :: nav_bar"></nav>
+<div class="d-flex align-content-center" style="height: 100vh">
+    <div class="container form-container">
+        <div class="form-card" style="max-width: 100%">
+            <h2 class="text-center mb-5 logo" style="color: black">LibraryLand</h2>
+
+            <div class="container">
+                <form name='f' th:action="@{/perform_register}" method='POST' autocomplete="off">
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-input" name='user.firstName'
+                                       placeholder="Nombre" th:field="${user.firstName}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('user.firstName')}"
+                                     th:errors="*{user.firstName}"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-input" name='user.email'
+                                       placeholder="Email" th:field="${user.email}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('user.email')}"
+                                     th:errors="*{user.email}"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-input" name='user.username'
+                                       placeholder="Usuario" th:field="${user.username}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('user.username')}"
+                                     th:errors="*{user.username}"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control form-input" name='user.password'
+                                       placeholder="Contraseña" th:field="${user.password}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('user.password')}"
+                                     th:errors="*{user.password}"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-input" name='user.lastName'
+                                       placeholder="Apellido" th:field="${user.lastName}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('user.lastName')}"
+                                     th:errors="*{user.lastName}"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-input" name='address.city'
+                                       placeholder="Ciudad" th:field="${address.city}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('address.city')}"
+                                     th:errors="*{address.city}"></div>
+
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-input" name='address.street'
+                                       placeholder="Calle" th:field="${address.street}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('address.street')}"
+                                     th:errors="*{address.street}"></div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <input type="number" class="form-control form-input" name='address.number'
+                                       placeholder="Número" th:field="${address.number}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('address.number')}"
+                                     th:errors="*{address.number}"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-submit-container">
+                        <button type="submit" class="btn btn-primary form-submit-button">Registrarse</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

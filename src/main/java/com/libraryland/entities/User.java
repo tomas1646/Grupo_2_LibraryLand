@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,9 +33,11 @@ import lombok.Setter;
 @Builder
 @Audited
 public class User extends Base {
+    @NotEmpty(message = "Primer Nombre no puede estar vacío")
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
+    @NotEmpty(message = "Apellido no puede estar vacío")
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
@@ -41,12 +45,16 @@ public class User extends Base {
     @JoinColumn(name = "fk_address", nullable = false)
     private Address address;
 
+    @NotEmpty(message = "Usuario no puede estar vacío")
     @Column(name = "username", unique = true, nullable = false)
     private String username;
 
+    @NotEmpty(message = "Email no puede estar vacío")
+    @Email(message = "Email no es valido")
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @NotEmpty(message = "Contraseña no puede estar vacío")
     @Column(name = "password", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
