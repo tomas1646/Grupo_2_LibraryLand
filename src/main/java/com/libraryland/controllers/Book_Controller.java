@@ -9,7 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @CrossOrigin(origins = "*")
@@ -21,7 +25,29 @@ public class Book_Controller {
 
     @GetMapping("")
     public String index(@RequestParam Map<String, Object> params, Model model) {
-        return "index";
+
+        int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+        PageRequest pageRequest = PageRequest.of(page, 20);
+        Page<Book> books = null;
+
+        try {
+            books = bookService.findAll(pageRequest);
+            model.addAttribute("books", books);
+
+            int totalPages = books.getTotalPages();
+            if(totalPages>0){
+                List<Integer> pages = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pages",pages);
+                model.addAttribute("currentPage", page+1);
+                model.addAttribute("nextPage", page+2);
+                model.addAttribute("prevPage", page);
+                model.addAttribute("lastPage", totalPages);
+            }
+
+            return "index";
+        } catch (Exception e) {
+            return "error";
+        }
     }
 
     @GetMapping("/search")

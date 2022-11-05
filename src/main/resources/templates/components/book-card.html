@@ -1,18 +1,46 @@
-<div th:fragment="book_card" th:each="book : ${books}" >
-    <div class="col">
-        <div class="card">
-            <a th:href="@{/detail/{id}(id=${book.id})}" ><img th:src="${book.imageSrc}" class="card-img-top img-fluid book-card-image" th:alt="${book.title}"></a>
-            <div class="card-body">
-                <h5 th:text="${book.title}" class="card-title">Card title</h5>
-                <h6 class="card-subtitle mb-2">
-                    <span th:each="author : ${book.authors}">
-                        <a th:text="${author.fullName}" th:href="@{authors/{id}(id=${author.id})}"></a> &nbsp;
-                    </span>
-                </h6>
-                <h4>$<span th:text="${book.price}" class="card-subtitle mb-2 text-muted">Card subtitle</span></h4>
-                <a class="btn btn-warning" href="#" role="button">Comprar</i></a>
+<div th:fragment="book_card" >
+    <div class="pb-2 row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 row  g-4 m-4">
+        <div th:each="book : ${books}" class="col">
+            <div class="card">
+                <a th:href="@{/detail/{id}(id=${book.id})}" ><img th:src="${book.imageSrc}" class="card-img-top img-fluid book-card-image" th:alt="${book.title}"></a>
+                <div class="card-body">
+                    <h5 th:text="${book.title}" class="card-title">Card title</h5>
+                    <h6 class="card-subtitle mb-2">
+                        <span th:each="author : ${book.authors}">
+                            <a th:text="${author.fullName}" th:href="@{authors/{id}(id=${author.id})}"></a> &nbsp;
+                        </span>
+                    </h6>
+                    <h4>$<span th:text="${book.price}" class="card-subtitle mb-2 text-muted">Card subtitle</span></h4>
+                    <a class="btn btn-warning" href="#" role="button">Comprar</i></a>
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container pb-6" th:if="${pages!=null}">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${prevPage==0}?'disabled':''">
+                            <a class="page-link" th:href="@{|/?page=${prevPage}|}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <li th:each="page : ${pages}" class="page-item">
+                            <a class="page-link" th:classappend="${currentPage==page}?'active':''" th:text="${page}" th:href="@{|/?page=${page}|}"></a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${currentPage==lastPage}?'disabled':''">
+                            <a class="page-link"  th:href="@{|/?page=${nextPage}|}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
 </div>
+
