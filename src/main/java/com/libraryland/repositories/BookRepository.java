@@ -18,4 +18,7 @@ public interface BookRepository extends BaseRepository<Book, Long> {
 
     @Query(value = "SELECT b FROM Book b JOIN b.genres g WHERE g.name = ?1")    
     Page<Book> findByGenreName(String genre, Pageable pageable);
+
+    @Query(value = "SELECT b FROM Book b JOIN b.authors a WHERE a.fullName = ?1")    
+    Page<Book> findByAuthorName(String author, Pageable pageable);
 }
