@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="components/headers :: headerfiles">
+    </th:block>
+    <link th:href="@{/formStyle.css}" rel="stylesheet"/>
+</head>
+<body>
+<nav th:replace="components/navbar :: nav_bar"></nav>
+<div class="container">
+    <a class="btn btn-primary m-3" th:href="@{/admin/authors/list}" role="button">Volver Atrás</a>
+    <div class="container form-container">
+        <div class="form-card mt-3" style="max-width: 100%">
+            <h2 class="text-left mb-5" style="color: black">Autor</h2>
+
+            <div class="container">
+                <form name='f' th:action="@{/admin/authors/{id}(id=(${author.id} == null ? 0 : ${author.id}))}"
+                      th:object="${author}" method='POST'
+                      autocomplete="off">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="fullName">Nombre Completo:</label>
+                                <input type="text" class="form-control form-input"
+                                       placeholder="Nombre Completo" th:field="*{fullName}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('fullName')}"
+                                     th:errors="*{fullName}"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="biography">Biografia:</label>
+                                    <textarea class="form-control form-input"
+                                              placeholder="Biografia" th:field="*{biography}" rows="6"></textarea>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('biography')}"
+                                         th:errors="*{biography}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-submit-container">
+                        <button type="submit" class="btn btn-primary form-submit-button">Confirmar</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

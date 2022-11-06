@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.util.List;
 
 @Controller
@@ -19,7 +20,7 @@ public class Genre_Controller {
     private GenreService genreService;
 
     @GetMapping("/admin/genres/list")
-    public String genres(Model model) {
+    public String genreList(Model model) {
         try {
             List<Genre> genres = genreService.findAll();
             model.addAttribute("genres", genres);
@@ -32,7 +33,7 @@ public class Genre_Controller {
     }
 
     @GetMapping("/admin/genres/{id}")
-    public String genre(@PathVariable("id") long id, Model model) {
+    public String genreForm(@PathVariable("id") long id, Model model) {
         try {
             if (id == 0) {
                 model.addAttribute("genre", new Genre());
@@ -49,7 +50,7 @@ public class Genre_Controller {
     }
 
     @PostMapping("/admin/genres/{id}")
-    public String genre(@PathVariable("id") Long id, @Valid @ModelAttribute("genre") Genre genre, BindingResult genreResult) {
+    public String genreFormAction(@PathVariable("id") Long id, @Valid @ModelAttribute("genre") Genre genre, BindingResult genreResult) {
         try {
             if (genreResult.hasErrors()) {
                 return "views/admin/genres/form";
@@ -62,6 +63,12 @@ public class Genre_Controller {
             }
 
             return "redirect:/admin/genres/list";
+        } catch (ValidationException e) {
+            if (e.getMessage().contains(genre.getName())) {
+                genreResult.rejectValue("name", "error.name", "Ya existe un género con ese nombre");
+                return "views/admin/genres/form";
+            }
+            return "error";
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
@@ -69,7 +76,7 @@ public class Genre_Controller {
     }
 
     @GetMapping("/admin/genres/delete/{id}")
-    public String deleteGenreView(Model model, @PathVariable("id") Long id) {
+    public String genreDeleteForm(Model model, @PathVariable("id") Long id) {
         try {
             model.addAttribute("genre", genreService.findById(id));
             return "views/admin/genres/delete";
@@ -80,7 +87,7 @@ public class Genre_Controller {
     }
 
     @PostMapping("/admin/genres/delete/{id}")
-    public String deleteGenre(Model model, @PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    public String genreDeleteFormAction(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         try {
             genreService.delete(id);
             return "redirect:/admin/genres/list";

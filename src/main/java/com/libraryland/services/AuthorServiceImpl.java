@@ -16,4 +16,12 @@ public class AuthorServiceImpl extends BaseServiceImpl<Author, Long> implements 
     public AuthorServiceImpl(BaseRepository<Author, Long> baseRepository, EntityManager entityManager) {
         super(baseRepository, entityManager);
     }
+
+    public Author findByFullName(String fullName) throws Exception {
+        try {
+            return authorRepository.findByFullName(fullName).get();
+        } catch (Exception e) {
+            throw new Exception((e.getMessage()));
+        }
+    }
 }

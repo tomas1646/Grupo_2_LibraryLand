@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AuthorRepository extends BaseRepository<Author, Long> {
@@ -17,4 +18,6 @@ public interface AuthorRepository extends BaseRepository<Author, Long> {
 
     @Query(value = "SELECT a FROM Author a WHERE a.fullName LIKE %:filtro%")
     Page<Author> search(String filtro, Pageable pageable);
+
+    Optional<Author> findByFullName(String fullName);
 }

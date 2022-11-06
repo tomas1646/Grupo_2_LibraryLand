@@ -21,7 +21,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="name">Nombre:</label>
-                                <input type="text" class="form-control form-input" name='user.firstName'
+                                <input type="text" class="form-control form-input"
                                        placeholder="Nombre" th:field="*{name}">
                                 <div class="text-danger" th:if="${#fields.hasErrors('name')}"
                                      th:errors="*{name}"></div>

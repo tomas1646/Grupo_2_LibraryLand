@@ -3,11 +3,14 @@ package com.libraryland.services;
 import com.libraryland.entities.Base;
 import com.libraryland.repositories.BaseRepository;
 
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import javax.validation.ValidationException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +64,9 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
             baseRepository.flush();
             refresh(entity);
             return entity;
+        } catch (DataIntegrityViolationException e) {
+            ConstraintViolationException cause = (ConstraintViolationException) e.getCause();
+            throw new ValidationException(cause.getCause().getLocalizedMessage());
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
@@ -72,6 +78,9 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
         try {
             Optional<E> entityOptional = baseRepository.findById(id);
             return baseRepository.save(entity);
+        } catch (DataIntegrityViolationException e) {
+            ConstraintViolationException cause = (ConstraintViolationException) e.getCause();
+            throw new ValidationException(cause.getCause().getLocalizedMessage());
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

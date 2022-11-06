@@ -84,19 +84,19 @@ public class DBInitializer {
 
         genres.clear();
         authors.clear();
-        genres.add(genre4);        
+        genres.add(genre4);
         authors.add(author5);
         createBook("All Fires The Fire", "In the story, a sick teenager navigates a crush on his young nurse (Cora). Their lives overlap as the patient's most private rituals, his bodily functions, become Nurse Cora's daily tasks and she becomes obsessed with his recovery.", 1966, 11, "https://upload.wikimedia.org/wikipedia/en/thumb/2/2f/TodosLosFuegosElFuego.jpg/220px-TodosLosFuegosElFuego.jpg", 1999.99F, genres, authors, 4L);
 
         genres.clear();
         authors.clear();
-        genres.add(genre4);        
+        genres.add(genre4);
         authors.add(author5);
         createBook("The Secret Weapons", "This present collection entails five stories with different plots and characters, all emphasizing the new level of imaginative reality that combines the internal feelings of people with the real happenings in reality. ", 1959, 0, "https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/LasArmasSecretas.jpg/220px-LasArmasSecretas.jpg", 1382F, genres, authors, 5L);
 
         genres.clear();
         authors.clear();
-        genres.add(genre4);        
+        genres.add(genre4);
         authors.add(author5);
         createBook("We Love Glenda So Much", "It's about a group of film enthusiasts who become obsessed with an actress named Glenda Garson, who is clearly not too far away from the real-life Glenda. They so worship her performances that they become frustrated by the occasional imperfections in the fallible films that contain her.", 1980, 100, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfZcypjL2GYPZaYXM9E_pi3nFZAVe2VxFRafQwvYXFD1QVcqbtoKTtrIqsXSV18Nc4vIc&usqp=CAU", 1963F, genres, authors, 6L);
     }
@@ -128,7 +128,7 @@ public class DBInitializer {
 
     public Genre saveGenreIfDoesntExists(Genre genre) {
         try {
-            return genreService.findById(genre.getId());
+            return genreService.findByName(genre.getName());
         } catch (Exception e) {
             try {
                 return genreService.save(genre);
@@ -141,7 +141,7 @@ public class DBInitializer {
 
     public Author saveAuthorIfDoesntExists(Author author) {
         try {
-            return authorService.findById(author.getId());
+            return authorService.findByFullName(author.getFullName());
         } catch (Exception e) {
             try {
                 return authorService.save(author);
