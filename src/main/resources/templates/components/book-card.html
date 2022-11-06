@@ -27,7 +27,27 @@
     <div class="container pb-6" th:if="${pages!=null}">
         <div class="row">
             <div class="col">
-                <nav aria-label="Page navigation">
+                <nav th:if="${fromFiltersFlag}"  aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${prevPage==0}?'disabled':''">
+                            <a class="page-link" th:href="@{|${#httpServletRequest.requestURL}?${filter}&page=${prevPage}|}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <li th:each="page : ${pages}" class="page-item">
+                            <a class="page-link" th:classappend="${currentPage==page}?'active':''" th:text="${page}"
+                               th:href="@{|${#httpServletRequest.requestURL}?${filter}&page=${page}|}"></a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${currentPage==lastPage}?'disabled':''">
+                            <a class="page-link" th:href="@{|${#httpServletRequest.requestURL}?${filter}&page=${nextPage}|}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <nav th:unless="${fromFiltersFlag}"  aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         <li class="page-item" th:classappend="${prevPage==0}?'disabled':''">
                             <a class="page-link" th:href="@{|/?page=${prevPage}|}" aria-label="Previous">

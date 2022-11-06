@@ -40,9 +40,11 @@ public class Book_Controller {
         Page<Book> books = null;
         List<Author> allAuthors;         
         List<Genre> allGenres;
+        boolean fromFiltersFlag = false;
         try {
             books = bookService.findAll(pageRequest);
             model.addAttribute("books", books);
+            model.addAttribute("fromFiltersFlag", fromFiltersFlag);
 
             int totalPages = books.getTotalPages();
             if(totalPages>0){
@@ -86,6 +88,7 @@ public class Book_Controller {
         Page<Book> books = null;
         List<Author> allAuthors;         
         List<Genre> allGenres;
+        boolean fromFiltersFlag = true;
 
         try {
             books = bookService.findByGenre(pageRequest, params.get("genre").toString());
@@ -94,6 +97,8 @@ public class Book_Controller {
             allGenres = genreService.findAll();
             model.addAttribute("authors", allAuthors);
             model.addAttribute("genres", allGenres);
+            model.addAttribute("fromFiltersFlag", fromFiltersFlag);
+            model.addAttribute("filter", "genre=" + params.get("genre").toString());
             int totalPages = books.getTotalPages();
             if(totalPages>0){
                 List<Integer> pages = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
@@ -117,6 +122,7 @@ public class Book_Controller {
         Page<Book> books = null;
         List<Author> allAuthors;         
         List<Genre> allGenres;
+        boolean fromFiltersFlag = true;
 
         try {
             books = bookService.findByAuthor(pageRequest, params.get("author").toString());
@@ -125,6 +131,8 @@ public class Book_Controller {
             allGenres = genreService.findAll();
             model.addAttribute("authors", allAuthors);
             model.addAttribute("genres", allGenres);
+            model.addAttribute("fromFiltersFlag", fromFiltersFlag);
+            model.addAttribute("filter", "author=" + params.get("author").toString());
             int totalPages = books.getTotalPages();
             if(totalPages>0){
                 List<Integer> pages = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
