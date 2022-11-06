@@ -31,7 +31,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 // Allow access to not-authenticated users
-                .antMatchers("/*")
+                .antMatchers("/*", "/css/**", "/fonts/**", "/js/**")
                 .permitAll()
 
                 // Request user and password for Api request
