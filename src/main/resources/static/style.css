@@ -1,58 +1,63 @@
 
+.bg-orange {
+    background-color: #FF8E3C;
+}
 
- .bg-orange{    
-    background-color: #FF8E3C;    
- }
+.bg-grey {
+    background-color: #D9D9D9;
+}
 
- .bg-grey{
-   background-color: #D9D9D9;
- }
- 
- @font-face {
+@font-face {
     font-family: parisienne;
     src: url("./fonts/Parisienne-Regular.ttf");
- }
+}
 
- .logo{
+.logo {
     font-family: Parisienne;
     font-size: 45px;
     color: white;
- }
+}
 
- .navbar-text{
+.navbar-text {
     font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 25px;
-    line-height: 38px;    
+    line-height: 38px;
     color: #FFFFFF;
- }
+}
 
- .filtersbar-text{
-   font-family: Arial, Helvetica, sans-serif;
+.filtersbar-text {
+    font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
-    line-height: 38px;    
+    line-height: 38px;
     color: black;
- }
-
- .footer{
-   
- }
-
- .footer a{
-   font-family: Arial, Helvetica, sans-serif;
-   font-style: normal;
-   font-weight: bold;
-   font-size: 15px;   
-   color: #FFFFFF;   
-   text-decoration: solid;
- }
-  .border-3 {
-    border-width:3px !important;
 }
 
- .pb-6{
-     padding-bottom: 70px;
- }
+.footer {
+
+}
+
+.footer a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: #FFFFFF;
+    text-decoration: solid;
+}
+
+.border-3 {
+    border-width: 3px !important;
+}
+
+.pb-6 {
+    padding-bottom: 70px;
+}
+
+.book-card-image{
+    height: 300px;
+    object-fit: contain;
+}
