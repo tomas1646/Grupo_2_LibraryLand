@@ -24,4 +24,13 @@ public class BookController extends BaseControllerImpl<Book, BookServiceImpl> {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error. Por favor intente mas tarde.\"}");
         }
     }
+
+    @GetMapping("/byAuthor/{author}")
+    public ResponseEntity<?> getByAuthor(Pageable pageable,@PathVariable String author){
+        try{
+            return ResponseEntity.status((HttpStatus.OK)).body(service.findByAuthor(pageable,author));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error. Por favor intente mas tarde.\"}");
+        }
+    }
 }

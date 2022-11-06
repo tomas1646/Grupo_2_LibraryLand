@@ -30,4 +30,14 @@ public class BookServiceImpl extends BaseServiceImpl<Book, Long> implements Book
             throw new Exception((e.getMessage()));
         }
     }
+
+    @Override
+    @Transactional
+    public Page<Book> findByAuthor(Pageable pageable, String author) throws Exception{
+        try {
+            return bookRepository.findByAuthorName(author,pageable);
+        } catch (Exception e) {
+            throw new Exception((e.getMessage()));
+        }
+    }
 }

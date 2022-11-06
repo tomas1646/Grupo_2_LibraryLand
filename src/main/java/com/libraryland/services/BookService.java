@@ -8,4 +8,5 @@ import com.libraryland.entities.Genre;
 
 public interface BookService extends BaseService<Book, Long> {
     public Page<Book> findByGenre(Pageable pageable, String genre) throws Exception;
+    public Page<Book> findByAuthor(Pageable pageable, String author) throws Exception;
 }

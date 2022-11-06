@@ -84,12 +84,58 @@ public class Book_Controller {
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
         PageRequest pageRequest = PageRequest.of(page, 20);
         Page<Book> books = null;
+        List<Author> allAuthors;         
+        List<Genre> allGenres;
 
         try {
             books = bookService.findByGenre(pageRequest, params.get("genre").toString());
             model.addAttribute("books", books);
+            allAuthors = authorService.findAll();
+            allGenres = genreService.findAll();
+            model.addAttribute("authors", allAuthors);
+            model.addAttribute("genres", allGenres);
+            int totalPages = books.getTotalPages();
+            if(totalPages>0){
+                List<Integer> pages = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pages",pages);
+                model.addAttribute("currentPage", page+1);
+                model.addAttribute("nextPage", page+2);
+                model.addAttribute("prevPage", page);
+                model.addAttribute("lastPage", totalPages);
+            }
 
-            return "views/search";
+            return "index";
+        } catch (Exception e) {
+            return "error";
+        }
+    }
+
+    @GetMapping("/searchByAuthor")
+    public String getAllByAuthor(@RequestParam Map<String, Object> params, Model model) {
+        int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+        PageRequest pageRequest = PageRequest.of(page, 20);
+        Page<Book> books = null;
+        List<Author> allAuthors;         
+        List<Genre> allGenres;
+
+        try {
+            books = bookService.findByAuthor(pageRequest, params.get("author").toString());
+            model.addAttribute("books", books);
+            allAuthors = authorService.findAll();
+            allGenres = genreService.findAll();
+            model.addAttribute("authors", allAuthors);
+            model.addAttribute("genres", allGenres);
+            int totalPages = books.getTotalPages();
+            if(totalPages>0){
+                List<Integer> pages = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pages",pages);
+                model.addAttribute("currentPage", page+1);
+                model.addAttribute("nextPage", page+2);
+                model.addAttribute("prevPage", page);
+                model.addAttribute("lastPage", totalPages);
+            }
+
+            return "index";
         } catch (Exception e) {
             return "error";
         }
