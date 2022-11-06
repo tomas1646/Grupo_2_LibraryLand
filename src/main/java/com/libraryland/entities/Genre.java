@@ -5,11 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +21,7 @@ import java.util.List;
 @Audited
 @JsonIgnoreProperties(value = {"books"})
 public class Genre extends Base {
+    @NotEmpty(message = "El nombre no puede estar vacio")
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 

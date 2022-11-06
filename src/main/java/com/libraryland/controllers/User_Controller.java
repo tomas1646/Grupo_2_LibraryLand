@@ -60,4 +60,9 @@ public class User_Controller {
             return "views/register";
         }
     }
+
+    @GetMapping("/admin")
+    public String admin(){
+        return "views/admin/admin";
+    }
 }

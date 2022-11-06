@@ -30,6 +30,9 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
 
+                .antMatchers("/admin", "/admin/**")
+                .hasAuthority("ADMIN")
+
                 // Allow access to not-authenticated users
                 .antMatchers("/*", "/css/**", "/fonts/**", "/js/**")
                 .permitAll()
