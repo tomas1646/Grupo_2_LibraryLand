@@ -79,6 +79,22 @@ public class Book_Controller {
         }
     }
 
+    @GetMapping("/searchByGenre")
+    public String getAllByGenre(@RequestParam Map<String, Object> params, Model model) {
+        int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
+        PageRequest pageRequest = PageRequest.of(page, 20);
+        Page<Book> books = null;
+
+        try {
+            books = bookService.findByGenre(pageRequest, params.get("genre").toString());
+            model.addAttribute("books", books);
+
+            return "views/search";
+        } catch (Exception e) {
+            return "error";
+        }
+    }
+    
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
         try {
