@@ -26,7 +26,7 @@ public class DBInitializer {
     }
 
     @PostConstruct
-    private void initializeDB() {
+    private void initializeDB() throws Exception {
         // Initialize tasks
         Genre genre1 = createGenre("Fiction", 1L);
         Genre genre2 = createGenre("Non-Fiction", 2L);
@@ -59,8 +59,9 @@ public class DBInitializer {
         createUser("Manuel", "Ibanez", "MIbanez@hotmail.com", "123124", "MHibanez", address, 5L);
 
         address = Address.builder().city("Maipu").street("Italia").number(490).build();
-        createAdmin("admin", "admin", "admin@hotmail.com", "admin", "admin", address, 5L);
-
+        User user = createUser("admin", "admin", "admin@hotmail.com", "admin", "admin", address, 5L);
+        user.setRoles("ADMIN");
+        userService.update(user.getId(), user);
 
         List<Genre> genres = new ArrayList<>();
         genres.add(genre1);
@@ -112,18 +113,11 @@ public class DBInitializer {
         return saveAuthorIfDoesntExists(author);
     }
 
-    public void createAdmin(String firstName, String lastName, String email, String password, String username, Address address, Long id) {
-        User user = User.builder().firstName(firstName).lastName(lastName).email(email).password(password).username(username).roles("ADMIN").build();
-        user.setAddress(address);
-        user.setId(id);
-        saveUserIfDoesntExists(user);
-    }
-
-    public void createUser(String firstName, String lastName, String email, String password, String username, Address address, Long id) {
+    public User createUser(String firstName, String lastName, String email, String password, String username, Address address, Long id) {
         User user = User.builder().firstName(firstName).lastName(lastName).email(email).password(password).username(username).roles("USER").build();
         user.setAddress(address);
         user.setId(id);
-        saveUserIfDoesntExists(user);
+        return saveUserIfDoesntExists(user);
     }
 
     public void createBook(String title, String synopsis, int publicationYear, int stock, String imageSrc, Float price, List<Genre> genres, List<Author> authors, Long id) {
@@ -158,14 +152,15 @@ public class DBInitializer {
         }
     }
 
-    public void saveUserIfDoesntExists(User user) {
+    public User saveUserIfDoesntExists(User user) {
         try {
-            userService.findById(user.getId());
+            return userService.findById(user.getId());
         } catch (Exception e) {
             try {
-                userService.save(user);
+                return userService.save(user);
             } catch (Exception ex) {
                 ex.printStackTrace();
+                return null;
             }
         }
     }
