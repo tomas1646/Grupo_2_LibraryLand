@@ -6,7 +6,6 @@
 - Francisco Guiñazú 
 - Florencia Hemsy
 - Tomás Espinosa
-- Octavio Alcalde
 ```
 
 ## ¿Qué productos o servicios brindará nuestro sitio? 
