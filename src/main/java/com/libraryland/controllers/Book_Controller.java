@@ -70,10 +70,22 @@ public class Book_Controller {
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
         PageRequest pageRequest = PageRequest.of(page, 20);
         Page<Book> books = null;
+        boolean fromFiltersFlag = true;
 
         try {
             books = bookService.search(params.get("filtro").toString(), pageRequest);
             model.addAttribute("books", books);
+            int totalPages = books.getTotalPages();
+            if(totalPages>0){
+                List<Integer> pages = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pages",pages);
+                model.addAttribute("currentPage", page+1);
+                model.addAttribute("nextPage", page+2);
+                model.addAttribute("prevPage", page);
+                model.addAttribute("lastPage", totalPages);
+            }
+            model.addAttribute("fromFiltersFlag", fromFiltersFlag);
+            model.addAttribute("filter", "filtro=" + params.get("filtro").toString());
 
             return "views/search";
         } catch (Exception e) {
