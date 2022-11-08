@@ -1,5 +1,6 @@
 package com.libraryland.services;
 
+import com.libraryland.entities.Cart;
 import com.libraryland.entities.User;
 import com.libraryland.entities.UserDetailsWrapper;
 import com.libraryland.repositories.BaseRepository;
@@ -33,6 +34,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
     public User save(User user) throws Exception {
         try {
             user.setRoles("USER");
+
+            user.setCart(Cart.builder().user(user).build());
+
             user = userRepository.save(user);
             return user;
         } catch (DataIntegrityViolationException e) {
@@ -44,7 +48,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
     }
 
     @Transactional
-    public Optional<User> findByName(String name) throws Exception{
+    public Optional<User> findByName(String name) throws Exception {
         try {
             return userRepository.findByUsername(name);
         } catch (Exception e) {
@@ -52,7 +56,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
         }
     }
 
-    
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);

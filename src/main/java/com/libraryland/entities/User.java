@@ -62,7 +62,7 @@ public class User extends Base {
     @Column(name = "roles")
     private String roles;
 
-    @OneToOne(cascade = {CascadeType.REMOVE}, orphanRemoval = true, mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     @JoinColumn(name = "fk_cart", unique = true)
     @JsonIncludeProperties(value = {"id"})
     private Cart cart;

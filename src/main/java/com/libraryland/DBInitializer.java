@@ -114,7 +114,7 @@ public class DBInitializer {
     }
 
     public User createUser(String firstName, String lastName, String email, String password, String username, Address address, Long id) {
-        User user = User.builder().firstName(firstName).lastName(lastName).email(email).password(password).username(username).roles("USER").build();
+        User user = User.builder().firstName(firstName).lastName(lastName).email(email).password(password).username(username).build();
         user.setAddress(address);
         user.setId(id);
         return saveUserIfDoesntExists(user);
