@@ -8,6 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,24 +24,34 @@ import java.util.List;
 @Audited
 @JsonIgnoreProperties(value = {"cartDetails", "orderDetails"})
 public class Book extends Base {
+    @NotEmpty(message = "El titulo no puede estar vacio")
     @Column(name = "title", nullable = false)
     private String title;
 
+    @NotEmpty(message = "La sinopsis no puede estar vacia")
+    @Size(max = 2000, message = "La sinopsis no puede tener mas de 2000 caracteres")
     @Column(name = "synopsis", length = 2000, nullable = false)
     private String synopsis;
 
+    @NotNull(message = "El año de publicacion no puede estar vacio")
     @Column(name = "publication_year", nullable = false)
     private int publicationYear;
 
+    @NotNull(message = "El stock no puede estar vacio")
+    @Min(value = 0, message = "El stock no puede ser negativo")
     @Column(name = "stock", nullable = false)
     private int stock;
 
-    @Column(name="image_src", nullable = false, length = 2048)
+    // TODO: Add image
+    @Column(name = "image_src", nullable = false, length = 2048)
     private String imageSrc;
 
+    @NotNull(message = "El precio no puede estar vacio")
+    @Min(value = 0, message = "El precio no puede ser negativo")
     @Column(name = "price", precision = 8, scale = 2, nullable = false)
     private float price;
 
+    @NotNull(message = "El genero no puede estar vacio")
     @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(
             name = "book_genre",
@@ -46,6 +60,7 @@ public class Book extends Base {
     )
     private List<Genre> genres = new ArrayList();
 
+    @NotNull(message = "El autor no puede estar vacio")
     @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(
             name = "book_author",
@@ -60,4 +75,12 @@ public class Book extends Base {
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.MERGE) //cascade type dudoso. Revisar
     private List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+
+    public boolean hasGenre(String genreName) {
+        return genres.stream().anyMatch(genre -> genre.getName().equals(genreName));
+    }
+
+    public boolean hasAuthor(String authorName) {
+        return authors.stream().anyMatch(author -> author.getFullName().equals(authorName));
+    }
 }

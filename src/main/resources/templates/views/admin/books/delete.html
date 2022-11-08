@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="components/headers :: headerfiles">
+    </th:block>
+</head>
+<body>
+<nav th:replace="components/navbar :: nav_bar"></nav>
+<div class="container">
+    <a class="btn btn-primary m-3" th:href="@{/admin/books/list}" role="button">Volver Atrás</a>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form th:action="@{/admin/books/delete/{id}(id=${book.id})}" method="post">
+                        <div class="row g-3 text-center">
+                            <div class="form-group col-md-12">
+                                <h4>¿Esta seguro de eliminar el libro <span th:text="${book.title}"></span> ?
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row m-3">
+                            <div class="col-md-6">
+                                <button class="btn btn-outline-secondary" type="submit" style="width:100%">
+                                    Si
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-success" th:href="@{/admin/books/list}" style="width:100%">No</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+                <span th:text="${error}"></span>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

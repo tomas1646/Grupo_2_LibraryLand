@@ -12,9 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -160,7 +162,7 @@ public class Book_Controller {
             return "error";
         }
     }
-    
+
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
         try {
@@ -170,6 +172,89 @@ public class Book_Controller {
             return "views/detail";
         } catch (Exception e) {
             return "error";
+        }
+    }
+
+    @GetMapping("/admin/books/list")
+    public String bookAdminList(Model model) {
+        try {
+            List<Book> books = bookService.findAll();
+            model.addAttribute("books", books);
+
+            return "views/admin/books/list";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
+    @GetMapping("/admin/books/{id}")
+    public String bookForm(@PathVariable("id") long id, Model model) {
+        try {
+            List<Author> authors = authorService.findAll();
+            List<Genre> genres = genreService.findAll();
+            model.addAttribute("authors", authors);
+            model.addAttribute("genres", genres);
+
+            if (id == 0) {
+                model.addAttribute("book", new Book());
+            } else {
+                Book book = bookService.findById(id);
+                model.addAttribute("book", book);
+            }
+
+            return "views/admin/books/form";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
+    @PostMapping("/admin/books/{id}")
+    public String bookFormAction(@PathVariable("id") Long id, @Valid @ModelAttribute("book") Book book, BindingResult bookResult, Model model) {
+        try {
+            if (bookResult.hasErrors()) {
+                List<Author> authors = authorService.findAll();
+                List<Genre> genres = genreService.findAll();
+                model.addAttribute("authors", authors);
+                model.addAttribute("genres", genres);
+
+                return "views/admin/books/form";
+            }
+
+            if (id == 0) {
+                bookService.save(book);
+            } else {
+                bookService.update(id, book);
+            }
+
+            return "redirect:/admin/books/list";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
+    @GetMapping("/admin/books/delete/{id}")
+    public String bookDeleteForm(Model model, @PathVariable("id") Long id) {
+        try {
+            model.addAttribute("book", bookService.findById(id));
+            return "views/admin/books/delete";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
+    @PostMapping("/admin/books/delete/{id}")
+    public String bookDeleteFormAction(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        try {
+            bookService.delete(id);
+            return "redirect:/admin/books/list";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "No se pudo eliminar el Libro. Tiene ordenes o carritos asociados.");
+
+            return "redirect:/admin/books/delete/" + id;
         }
     }
 }

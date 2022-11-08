@@ -18,6 +18,7 @@ import java.util.List;
 @Builder
 @Audited
 @JsonIgnoreProperties(value = {"books"})
+@ToString(exclude = "books")
 public class Author extends Base {
     @NotEmpty(message = "El nombre del autor no puede estar vacío")
     @Column(name = "full_name", nullable = false, unique = true)

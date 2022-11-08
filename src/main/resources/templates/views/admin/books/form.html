@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="components/headers :: headerfiles">
+    </th:block>
+    <link th:href="@{/formStyle.css}" rel="stylesheet"/>
+</head>
+<body>
+<nav th:replace="components/navbar :: nav_bar"></nav>
+<div class="container">
+    <a class="btn btn-primary m-3" th:href="@{/admin/books/list}" role="button">Volver Atrás</a>
+    <h1>Esta vista esta en proceso, hay que ver la parte de las imagenes, subir archivos y guardarlos</h1>
+    <div class="container form-container">
+        <div class="form-card mt-3" style="max-width: 100%">
+            <h2 class="text-left mb-5" style="color: black">Libro</h2>
+
+            <div class="container">
+                <form name='f' th:action="@{/admin/books/{id}(id=(${book.id} == null ? 0 : ${book.id}))}"
+                      th:object="${book}" method='POST'
+                      autocomplete="off">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="title">Titulo:</label>
+                                    <input type="text" class="form-control form-input"
+                                           placeholder="Titulo" th:field="*{title}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('title')}"
+                                         th:errors="*{title}"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="publicationYear">Año de publicacion:</label>
+                                    <input type="number" class="form-control form-input"
+                                           placeholder="Año de publicacion" th:field="*{publicationYear}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('publicationYear')}"
+                                         th:errors="*{publicationYear}"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="stock">Stock:</label>
+                                    <input type="number" class="form-control form-input"
+                                           placeholder="Stock" th:field="*{stock}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('stock')}"
+                                         th:errors="*{stock}"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="price">Precio:</label>
+                                    <input type="number" class="form-control form-input"
+                                           placeholder="Precio" th:field="*{price}">
+                                    <div class="text-danger" th:if="${#fields.hasErrors('price')}"
+                                         th:errors="*{price}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="synopsis">Sinopsis:</label>
+                                <textarea class="form-control form-input"
+                                          placeholder="Sinopsis" th:field="*{synopsis}" rows="12"></textarea>
+                                <div class="text-danger" th:if="${#fields.hasErrors('synopsis')}"
+                                     th:errors="*{synopsis}"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="autores">Autores:</label>
+                                <select th:field="*{authors}" class="form-select form-select-lg mb-3" size="5" multiple>
+                                    <th:block th:each="author : ${authors}">
+                                        <option th:value="${author.id}" th:text="${author.fullName}"
+                                                th:selected="${book.hasAuthor(author.fullName)}"></option>
+                                    </th:block>
+                                </select>
+                                <div class="text-danger" th:if="${#fields.hasErrors('authors')}"
+                                     th:errors="*{authors}"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="genres">Generos:</label>
+                                <select th:field="*{genres}" class="form-select form-select-lg mb-3" size="5" multiple>
+                                    <th:block th:each="genre : ${genres}">
+                                        <option th:value="${genre.id}" th:text="${genre.name}"
+                                                th:selected="${book.hasGenre(genre.name)}"></option>
+                                    </th:block>
+                                </select>
+                                <div class="text-danger" th:if="${#fields.hasErrors('genres')}"
+                                     th:errors="*{genres}"></div>
+                            </div>
+                        </div>
+
+                        <span>Esta no va a ir:</span>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="imageSrc">Link de la imagen:</label>
+                                <input type="text" class="form-control form-input"
+                                       placeholder="Link de la imagen" th:field="*{imageSrc}">
+                                <div class="text-danger" th:if="${#fields.hasErrors('imageSrc')}"
+                                     th:errors="*{imageSrc}"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-submit-container">
+                        <button type="submit" class="btn btn-primary form-submit-button">Confirmar</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

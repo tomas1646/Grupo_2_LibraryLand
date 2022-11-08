@@ -1,10 +1,7 @@
 package com.libraryland.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -20,6 +17,7 @@ import java.util.List;
 @Builder
 @Audited
 @JsonIgnoreProperties(value = {"books"})
+@ToString(exclude = "books")
 public class Genre extends Base {
     @NotEmpty(message = "El nombre no puede estar vacio")
     @Column(name = "name", unique = true, nullable = false)
