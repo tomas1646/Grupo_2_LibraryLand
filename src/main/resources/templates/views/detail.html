@@ -8,6 +8,8 @@
 <nav th:replace="components/navbar :: nav_bar"></nav>
 
     <div th:replace="components/detail :: _detail"></div>
-
+    <div th:if="${books.size}">
+        <div th:replace="components/book-card :: book_card"></div>
+    </div>
 </body>
 </html>

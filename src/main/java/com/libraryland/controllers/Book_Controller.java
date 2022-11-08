@@ -166,8 +166,14 @@ public class Book_Controller {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
         try {
+
             Book book = bookService.findById(id);
             model.addAttribute("book", book);
+
+            PageRequest pageRequest = PageRequest.of(0, 5);
+            List<Book> books = bookService.findByGenre(pageRequest, book.getGenres().get(0).getName()).getContent();
+            //books.remove(book);
+            model.addAttribute("books", books);
 
             return "views/detail";
         } catch (Exception e) {

@@ -1,10 +1,15 @@
+:root {
+    --main-orange: #FF8E3C;
+    --main-bg-grey: #D9D9D9;
+}
+
 
 .bg-orange {
-    background-color: #FF8E3C;
+    background-color: var(--main-orange);
 }
 
 .bg-grey {
-    background-color: #D9D9D9;
+    background-color: var(--main-bg-grey);
 }
 
 @font-face {
@@ -56,8 +61,30 @@
 .pb-6 {
     padding-bottom: 70px;
 }
+.mt-50{
+    margin-top:50px;
+}
+
+.p-50{
+    padding:50px;
+}
 
 .book-card-image{
-    height: 300px;
+    height: 500px;
     object-fit: contain;
+    padding-bottom: 0px;
+}
+
+.book-detail-container{
+    border:none;
+    border-radius: 20px;
+    background-color: var(--main-bg-grey);
+}
+
+.btn-comprar{
+    background-color: var(--main-orange);
+    color:white;
+    margin:auto;
+    font-size: larger;
+    border: none;
 }
