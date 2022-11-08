@@ -16,9 +16,11 @@
                 </div>
                 <div class="card-footer bg-transparent border-0">
                     <h4>$<span th:text="${book.price}" class="card-subtitle mb-2 text-muted">Card subtitle</span>
-                        <a class="btn btn-warning bg-orange px-2 py-1" href="#" role="button">
-                            <i class="fa fa-cart-plus fa-lg" style="color:white" aria-hidden="true"></i>
-                        </a>
+                       <form name="b" th:action="@{addToCart/{id}(id=${book.id})}" method='POST'>
+                            <button class="btn btn-warning bg-orange px-2 py-1" type="submit">
+                                <i class="fa fa-cart-plus fa-lg" style="color:white" aria-hidden="true"></i>
+                            </button>
+                        </form>
                     </h4>
                 </div>
             </div>

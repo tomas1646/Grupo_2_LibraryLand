@@ -43,6 +43,16 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
         }
     }
 
+    @Transactional
+    public Optional<User> findByName(String name) throws Exception{
+        try {
+            return userRepository.findByUsername(name);
+        } catch (Exception e) {
+            throw new Exception((e.getMessage()));
+        }
+    }
+
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);

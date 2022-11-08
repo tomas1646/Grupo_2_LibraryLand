@@ -21,7 +21,7 @@ public class BookServiceImpl extends BaseServiceImpl<Book, Long> implements Book
         super(baseRepository, entityManager);
     }
 
-    @Override
+    
     @Transactional
     public Page<Book> findByGenre(Pageable pageable, String genre) throws Exception{
         try {
@@ -31,7 +31,7 @@ public class BookServiceImpl extends BaseServiceImpl<Book, Long> implements Book
         }
     }
 
-    @Override
+    
     @Transactional
     public Page<Book> findByAuthor(Pageable pageable, String author) throws Exception{
         try {
