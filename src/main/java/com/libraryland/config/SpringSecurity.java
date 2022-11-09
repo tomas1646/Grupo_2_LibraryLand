@@ -34,7 +34,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
                 .hasAuthority("ADMIN")
 
                 // Allow access to not-authenticated users
-                .antMatchers("/*", "/css/**", "/fonts/**", "/js/**")
+                .antMatchers("/*", "/css/**", "/fonts/**", "/js/**", "/images/**", "/detail/**")
                 .permitAll()
 
                 // Request user and password for Api request

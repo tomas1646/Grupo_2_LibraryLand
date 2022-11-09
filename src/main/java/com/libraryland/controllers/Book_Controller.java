@@ -14,11 +14,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.imageio.ImageIO;
 import javax.validation.Valid;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -40,7 +46,7 @@ public class Book_Controller {
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
         PageRequest pageRequest = PageRequest.of(page, 20);
         Page<Book> books = null;
-        List<Author> allAuthors;         
+        List<Author> allAuthors;
         List<Genre> allGenres;
         boolean fromFiltersFlag = false;
         try {
@@ -49,11 +55,11 @@ public class Book_Controller {
             model.addAttribute("fromFiltersFlag", fromFiltersFlag);
 
             int totalPages = books.getTotalPages();
-            if(totalPages>0){
-                List<Integer> pages = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
-                model.addAttribute("pages",pages);
-                model.addAttribute("currentPage", page+1);
-                model.addAttribute("nextPage", page+2);
+            if (totalPages > 0) {
+                List<Integer> pages = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pages", pages);
+                model.addAttribute("currentPage", page + 1);
+                model.addAttribute("nextPage", page + 2);
                 model.addAttribute("prevPage", page);
                 model.addAttribute("lastPage", totalPages);
             }
@@ -78,11 +84,11 @@ public class Book_Controller {
             books = bookService.search(params.get("filtro").toString(), pageRequest);
             model.addAttribute("books", books);
             int totalPages = books.getTotalPages();
-            if(totalPages>0){
-                List<Integer> pages = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
-                model.addAttribute("pages",pages);
-                model.addAttribute("currentPage", page+1);
-                model.addAttribute("nextPage", page+2);
+            if (totalPages > 0) {
+                List<Integer> pages = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pages", pages);
+                model.addAttribute("currentPage", page + 1);
+                model.addAttribute("nextPage", page + 2);
                 model.addAttribute("prevPage", page);
                 model.addAttribute("lastPage", totalPages);
             }
@@ -100,7 +106,7 @@ public class Book_Controller {
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
         PageRequest pageRequest = PageRequest.of(page, 20);
         Page<Book> books = null;
-        List<Author> allAuthors;         
+        List<Author> allAuthors;
         List<Genre> allGenres;
         boolean fromFiltersFlag = true;
 
@@ -114,11 +120,11 @@ public class Book_Controller {
             model.addAttribute("fromFiltersFlag", fromFiltersFlag);
             model.addAttribute("filter", "genre=" + params.get("genre").toString());
             int totalPages = books.getTotalPages();
-            if(totalPages>0){
-                List<Integer> pages = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
-                model.addAttribute("pages",pages);
-                model.addAttribute("currentPage", page+1);
-                model.addAttribute("nextPage", page+2);
+            if (totalPages > 0) {
+                List<Integer> pages = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pages", pages);
+                model.addAttribute("currentPage", page + 1);
+                model.addAttribute("nextPage", page + 2);
                 model.addAttribute("prevPage", page);
                 model.addAttribute("lastPage", totalPages);
             }
@@ -134,7 +140,7 @@ public class Book_Controller {
         int page = params.get("page") != null ? (Integer.valueOf(params.get("page").toString()) - 1) : 0;
         PageRequest pageRequest = PageRequest.of(page, 20);
         Page<Book> books = null;
-        List<Author> allAuthors;         
+        List<Author> allAuthors;
         List<Genre> allGenres;
         boolean fromFiltersFlag = true;
 
@@ -148,11 +154,11 @@ public class Book_Controller {
             model.addAttribute("fromFiltersFlag", fromFiltersFlag);
             model.addAttribute("filter", "author=" + params.get("author").toString());
             int totalPages = books.getTotalPages();
-            if(totalPages>0){
-                List<Integer> pages = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
-                model.addAttribute("pages",pages);
-                model.addAttribute("currentPage", page+1);
-                model.addAttribute("nextPage", page+2);
+            if (totalPages > 0) {
+                List<Integer> pages = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+                model.addAttribute("pages", pages);
+                model.addAttribute("currentPage", page + 1);
+                model.addAttribute("nextPage", page + 2);
                 model.addAttribute("prevPage", page);
                 model.addAttribute("lastPage", totalPages);
             }
@@ -217,20 +223,63 @@ public class Book_Controller {
     }
 
     @PostMapping("/admin/books/{id}")
-    public String bookFormAction(@PathVariable("id") Long id, @Valid @ModelAttribute("book") Book book, BindingResult bookResult, Model model) {
+    public String bookFormAction(@PathVariable("id") Long id,
+                                 @RequestParam("image") MultipartFile image,
+                                 @Valid @ModelAttribute("book") Book book,
+                                 BindingResult bookResult, Model model) {
         try {
-            if (bookResult.hasErrors()) {
-                List<Author> authors = authorService.findAll();
-                List<Genre> genres = genreService.findAll();
-                model.addAttribute("authors", authors);
-                model.addAttribute("genres", genres);
+            List<Author> authors = authorService.findAll();
+            List<Genre> genres = genreService.findAll();
+            model.addAttribute("authors", authors);
+            model.addAttribute("genres", genres);
 
+            if (bookResult.hasErrors()) {
                 return "views/admin/books/form";
             }
 
+            String ruta = System.getProperty("user.dir") + "/images";
+
+            int index = image.getOriginalFilename().indexOf(".");
+            String extension = "." + image.getOriginalFilename().substring(index + 1);
+            String fileName = UUID.randomUUID() + extension;
+            Path rutaAbsoluta = id != 0 ? Paths.get(ruta + "/" + book.getImageSrc()) : Paths.get(ruta + "/" + fileName);
+
+            //Path rutaAbsoluta =  Paths.get(ruta + "/" + fileName);
             if (id == 0) {
+                if (image.isEmpty()) {
+                    model.addAttribute("imageError", "La imagen es requerida");
+                    return "views/admin/books/form";
+                }
+                if (!this.validarExtension(image)) {
+                    model.addAttribute("imageError", "La extension no es valida");
+                    return "views/admin/books/form";
+                }
+                if (image.getSize() >= 15000000) {
+                    model.addAttribute("imageError", "El peso excede 15MB");
+                    return "views/admin/books/form";
+                }
+
+
+                Files.write(rutaAbsoluta, image.getBytes());
+                book.setImageSrc(fileName);
                 bookService.save(book);
             } else {
+                if (!image.isEmpty()) {
+                    if (!this.validarExtension(image)) {
+                        model.addAttribute("imageError", "La extension no es valida");
+                        return "views/admin/books/form";
+                    }
+                    if (image.getSize() >= 15000000) {
+                        model.addAttribute("imageError", "El peso excede 15MB");
+                        return "views/admin/books/form";
+                    }
+                    Files.write(rutaAbsoluta, image.getBytes());
+                }
+
+
+                //TODO: DELETE
+                //book.setImageSrc(fileName);
+
                 bookService.update(id, book);
             }
 
@@ -255,12 +304,30 @@ public class Book_Controller {
     @PostMapping("/admin/books/delete/{id}")
     public String bookDeleteFormAction(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         try {
+            Book book = bookService.findById(id);
+
+            if (book.getImageSrc() != null) {
+                String ruta = System.getProperty("user.dir") + "/images";
+                Path rutaAbsoluta = Paths.get(ruta + "/" + book.getImageSrc());
+                Files.delete(rutaAbsoluta);
+            }
+
             bookService.delete(id);
             return "redirect:/admin/books/list";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "No se pudo eliminar el Libro. Tiene ordenes o carritos asociados.");
 
             return "redirect:/admin/books/delete/" + id;
+        }
+    }
+
+    public boolean validarExtension(MultipartFile archivo) {
+        try {
+            ImageIO.read(archivo.getInputStream()).toString();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
         }
     }
 }

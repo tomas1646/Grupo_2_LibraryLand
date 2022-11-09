@@ -1,7 +1,7 @@
 <div th:fragment="_detail" class="card m-4 d-flex book-detail-container">
     <div class="row">
         <div class="col-5">
-            <img th:src="${book.imageSrc}" class="card-img-top img-fluid book-card-image p-50" th:alt="${book.title}">
+            <img th:src="@{'/images/'} + ${book.imageSrc}" class="card-img-top img-fluid book-card-image p-50" th:alt="${book.title}">
             <div class="text-center m-4">
                 <h2>$<span th:text="${book.price}" class="card-subtitle mb-2 text-muted">Card subtitle</span></h2>
                 <button type="button" class="btn btn-warning btn-comprar">Agregar al carrito</button>

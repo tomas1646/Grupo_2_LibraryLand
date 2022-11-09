@@ -43,7 +43,7 @@ public class Book extends Base {
     private int stock;
 
     // TODO: Add image
-    @Column(name = "image_src", nullable = false, length = 2048)
+    @Column(name = "image_src", length = 2048)
     private String imageSrc;
 
     @NotNull(message = "El precio no puede estar vacio")

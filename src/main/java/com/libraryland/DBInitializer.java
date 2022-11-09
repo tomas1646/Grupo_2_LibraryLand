@@ -67,38 +67,38 @@ public class DBInitializer {
         genres.add(genre1);
         List<Author> authors = new ArrayList<>();
         authors.add(author1);
-        createBook("Harry Potter and the Philosopher's Stone", "Harry Potter and the Philosopher's Stone is a fantasy novel written by British author J. K. Rowling. The first novel in the Harry Potter series and Rowling's debut novel, it follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday, when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. Harry makes close friends and a few enemies during his first year at the school, and with the help of his friends, he faces an attempted comeback by the dark wizard Lord Voldemort, who killed Harry's parents, but failed to kill Harry when he was just 15 months old.", 2001, 20, "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg", 5252F, genres, authors, 1L);
+        createBook("Harry Potter and the Philosopher's Stone", "Harry Potter and the Philosopher's Stone is a fantasy novel written by British author J. K. Rowling. The first novel in the Harry Potter series and Rowling's debut novel, it follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday, when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. Harry makes close friends and a few enemies during his first year at the school, and with the help of his friends, he faces an attempted comeback by the dark wizard Lord Voldemort, who killed Harry's parents, but failed to kill Harry when he was just 15 months old.", 2001, 20, "e726f16b-87fb-4189-92f8-b327e9b93543.jpg", 5252F, genres, authors, 1L);
 
         genres.clear();
         authors.clear();
         genres.add(genre5);
         authors.add(author5);
-        createBook("Rayuela", "Hopscotch is an account of the misadventures of Horacio Oliveira, a discontent Argentinean intellectual in his forties. He wanders 1950s Paris with his mistress La Maga and a band of bohemian cohorts, but a series of missteps and personal tragedies send him packing back to Buenos Aires.", 1963, 10, "https://3.bp.blogspot.com/-SD6hC4jfo-c/V3fOjz3RcTI/AAAAAAAAAVQ/3z9D1W0EF4kl45zn7f4vREyhTZkCZtqJgCLcB/s1600/9789875782211.jpg", 3000F, genres, authors, 2L);
+        createBook("Rayuela", "Hopscotch is an account of the misadventures of Horacio Oliveira, a discontent Argentinean intellectual in his forties. He wanders 1950s Paris with his mistress La Maga and a band of bohemian cohorts, but a series of missteps and personal tragedies send him packing back to Buenos Aires.", 1963, 10, "aeac0605-274c-4e95-b8d6-afc6d74fedfe.png", 3000F, genres, authors, 2L);
 
         genres.clear();
         authors.clear();
         genres.add(genre5);
         genres.add(genre6);
         authors.add(author6);
-        createBook("The Stranger", "Meursault, the narrator, is a young man living in Algiers. After receiving a telegram informing him of his mother’s death, he takes a bus to Marengo, where his mother had been living in an old persons’ home. He sleeps for almost the entire trip. When he arrives, he speaks to the director of the home. The director allows Meursault to see his mother, but Meursault finds that her body has already been sealed in the coffin. He declines the caretaker’s offer to open the coffin.", 1942, 5, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1590930002i/49552._UY2400_SS2400_.jpg", 2000F, genres, authors, 3L);
+        createBook("The Stranger", "Meursault, the narrator, is a young man living in Algiers. After receiving a telegram informing him of his mother’s death, he takes a bus to Marengo, where his mother had been living in an old persons’ home. He sleeps for almost the entire trip. When he arrives, he speaks to the director of the home. The director allows Meursault to see his mother, but Meursault finds that her body has already been sealed in the coffin. He declines the caretaker’s offer to open the coffin.", 1942, 5, "8e72b708-9536-4d39-8b8c-492b760d5eea._UY2400_SS2400_.jpg", 2000F, genres, authors, 3L);
 
         genres.clear();
         authors.clear();
         genres.add(genre4);
         authors.add(author5);
-        createBook("All Fires The Fire", "In the story, a sick teenager navigates a crush on his young nurse (Cora). Their lives overlap as the patient's most private rituals, his bodily functions, become Nurse Cora's daily tasks and she becomes obsessed with his recovery.", 1966, 11, "https://upload.wikimedia.org/wikipedia/en/thumb/2/2f/TodosLosFuegosElFuego.jpg/220px-TodosLosFuegosElFuego.jpg", 1999.99F, genres, authors, 4L);
+        createBook("All Fires The Fire", "In the story, a sick teenager navigates a crush on his young nurse (Cora). Their lives overlap as the patient's most private rituals, his bodily functions, become Nurse Cora's daily tasks and she becomes obsessed with his recovery.", 1966, 11, "918a7bc5-81f5-4e6b-9ab3-3f8afe5089a4.jpg", 1999.99F, genres, authors, 4L);
 
         genres.clear();
         authors.clear();
         genres.add(genre4);
         authors.add(author5);
-        createBook("The Secret Weapons", "This present collection entails five stories with different plots and characters, all emphasizing the new level of imaginative reality that combines the internal feelings of people with the real happenings in reality. ", 1959, 0, "https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/LasArmasSecretas.jpg/220px-LasArmasSecretas.jpg", 1382F, genres, authors, 5L);
+        createBook("The Secret Weapons", "This present collection entails five stories with different plots and characters, all emphasizing the new level of imaginative reality that combines the internal feelings of people with the real happenings in reality. ", 1959, 0, "31344616-991f-48a4-90c0-8a1af923d8f6.jpg", 1382F, genres, authors, 5L);
 
         genres.clear();
         authors.clear();
         genres.add(genre4);
         authors.add(author5);
-        createBook("We Love Glenda So Much", "It's about a group of film enthusiasts who become obsessed with an actress named Glenda Garson, who is clearly not too far away from the real-life Glenda. They so worship her performances that they become frustrated by the occasional imperfections in the fallible films that contain her.", 1980, 100, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfZcypjL2GYPZaYXM9E_pi3nFZAVe2VxFRafQwvYXFD1QVcqbtoKTtrIqsXSV18Nc4vIc&usqp=CAU", 1963F, genres, authors, 6L);
+        createBook("We Love Glenda So Much", "It's about a group of film enthusiasts who become obsessed with an actress named Glenda Garson, who is clearly not too far away from the real-life Glenda. They so worship her performances that they become frustrated by the occasional imperfections in the fallible films that contain her.", 1980, 100, "2ec0a4ac-07d3-4768-bee4-a956d1019816._AC_UL600_SR600,600_.jpg", 1963F, genres, authors, 6L);
     }
 
     public Genre createGenre(String name, Long id) {

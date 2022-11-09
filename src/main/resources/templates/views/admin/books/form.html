@@ -9,15 +9,14 @@
 <nav th:replace="components/navbar :: nav_bar"></nav>
 <div class="container">
     <a class="btn btn-primary m-3" th:href="@{/admin/books/list}" role="button">Volver Atrás</a>
-    <h1>Esta vista esta en proceso, hay que ver la parte de las imagenes, subir archivos y guardarlos</h1>
+
     <div class="container form-container">
         <div class="form-card mt-3" style="max-width: 100%">
             <h2 class="text-left mb-5" style="color: black">Libro</h2>
 
             <div class="container">
                 <form name='f' th:action="@{/admin/books/{id}(id=(${book.id} == null ? 0 : ${book.id}))}"
-                      th:object="${book}" method='POST'
-                      autocomplete="off">
+                      th:object="${book}" method='POST' enctype="multipart/form-data" autocomplete="off">
                     <div class="row">
                         <div class="col">
                             <div class="row">
@@ -97,14 +96,13 @@
                             </div>
                         </div>
 
-                        <span>Esta no va a ir:</span>
                         <div class="row">
                             <div class="form-group">
-                                <label for="imageSrc">Link de la imagen:</label>
-                                <input type="text" class="form-control form-input"
-                                       placeholder="Link de la imagen" th:field="*{imageSrc}">
-                                <div class="text-danger" th:if="${#fields.hasErrors('imageSrc')}"
-                                     th:errors="*{imageSrc}"></div>
+                                <label for="image">Imagen:</label>
+                                <input type="file" class="form-control form-input"
+                                       placeholder="Link de la imagen" name="image" id="image">
+                                <div class="text-danger" th:if="${imageError}"
+                                     th:text="${imageError}"></div>
                             </div>
                         </div>
                     </div>
