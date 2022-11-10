@@ -244,7 +244,6 @@ public class Book_Controller {
             String fileName = UUID.randomUUID() + extension;
             Path rutaAbsoluta = id != 0 ? Paths.get(ruta + "/" + book.getImageSrc()) : Paths.get(ruta + "/" + fileName);
 
-            //Path rutaAbsoluta =  Paths.get(ruta + "/" + fileName);
             if (id == 0) {
                 if (image.isEmpty()) {
                     model.addAttribute("imageError", "La imagen es requerida");
@@ -275,10 +274,6 @@ public class Book_Controller {
                     }
                     Files.write(rutaAbsoluta, image.getBytes());
                 }
-
-
-                //TODO: DELETE
-                //book.setImageSrc(fileName);
 
                 bookService.update(id, book);
             }
