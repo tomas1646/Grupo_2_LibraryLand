@@ -1,8 +1,14 @@
 package com.libraryland.controllers;
 
 import com.libraryland.entities.Author;
+import com.libraryland.entities.Base;
+import com.libraryland.entities.Book;
 import com.libraryland.services.AuthorService;
+import com.libraryland.services.BaseService;
+import com.libraryland.services.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
+import java.io.Serializable;
 import java.util.List;
 
 @Controller
@@ -18,6 +25,9 @@ import java.util.List;
 public class Author_Controller {
     @Autowired
     private AuthorService authorService;
+
+    @Autowired
+    protected BookServiceImpl bookService;
 
     @GetMapping("/admin/authors/list")
     public String authorList(Model model) {
@@ -97,4 +107,21 @@ public class Author_Controller {
             return "redirect:/admin/authors/delete/" + id;
         }
     }
+
+    @GetMapping("/authors/{id}")
+    public String getAuthorById(@PathVariable("id") long id, Model model) {
+        try {
+            Author author = authorService.findById(id);
+            model.addAttribute("author", author);
+
+            PageRequest pageRequest = PageRequest.of(0, 12);
+            Page<Book> books = bookService.findByAuthor(pageRequest,author.getFullName());
+            model.addAttribute("books", books);
+
+            return "views/authorDetail";
+        } catch (Exception e) {
+            return "error";
+        }
+    }
+
 }
