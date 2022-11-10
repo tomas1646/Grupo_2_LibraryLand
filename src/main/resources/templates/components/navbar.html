@@ -18,7 +18,7 @@
         <!-- NavBar for Authenticated Users -->
         <th:block sec:authorize="isAuthenticated()">
             <li class="my-auto px-0 mx-2 float-md-end">
-                <a class="btn navbar-text" href="#"><i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i></a>
+                <a class="btn navbar-text" th:href="@{/findCart}"><i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i></a>
             </li>
             <li class="my-auto px-0 mx-2 float-md-end">
                 <div class="dropdown">
