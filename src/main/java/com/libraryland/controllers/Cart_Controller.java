@@ -100,4 +100,32 @@ public class Cart_Controller {
             return "redirect:/login";
         }        
     }
+
+    @PostMapping("/deleteCartDetail/{id}")
+    public String deleteCartDetail(@PathVariable("id") Long id, Model model,Authentication authentication){
+
+        if (authentication != null){
+            try {
+                String username =  authentication.getName();
+                Optional<User> currentUser = userService.findByName(username);
+
+                if(currentUser.isPresent()){
+                    User user = currentUser.get();
+                    Cart cart = user.getCart();
+                    Book book = bookService.findById(id);
+                    List<CartDetail> cartDetails = cart.getDetails();
+                    cartDetails.removeIf(d->d.getBook().getId()==book.getId());
+                    cartService.update(cart.getId(), cart);
+                }else{
+                    throw new Exception("El usuario no se encuentra en la base de datos");
+                }
+                return "redirect:/findCart";
+
+            } catch (Exception e) {
+                return "error";
+            }
+        }else{
+            return "redirect:/login";
+        }
+    }
 }

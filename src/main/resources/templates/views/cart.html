@@ -30,7 +30,9 @@
             <button class="btn"><i class="fa fa-plus-circle fa-2x" style="color:#FF8E3C" aria-hidden="true"></i></button>
           </td>
           <td class="align-middle text-center">
-            <button class="btn" href = "#"><i class="fa fa-times-circle fa-2x" style="color:#FF8E3C" aria-hidden="true"></i></button>
+            <form th:action="@{/deleteCartDetail/{id}(id=${cartDetail.book.id})}" method="post">
+              <button class="btn" type="submit"><i class="fa fa-times-circle fa-2x" style="color:#FF8E3C" aria-hidden="true"></i></button>
+            </form>
           </td>
         </tr>       
       </tbody>
