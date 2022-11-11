@@ -1,6 +1,7 @@
 package com.libraryland.services;
 
 import com.libraryland.entities.Order;
+import com.libraryland.entities.User;
 import com.libraryland.repositories.BaseRepository;
 import com.libraryland.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements OrderService {
@@ -30,5 +32,9 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Long> implements Or
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
+    }
+
+    public List<Order> findByUser(User user) {
+        return orderRepository.findByUser(user);
     }
 }

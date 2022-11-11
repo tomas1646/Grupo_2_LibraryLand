@@ -4,6 +4,7 @@ import com.libraryland.entities.Order;
 
 import java.util.List;
 
+import com.libraryland.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,7 @@ public interface OrderRepository extends BaseRepository<Order, Long> {
 
     @Query(value = "SELECT p FROM Order p WHERE p.number = cast(:filtro as int) OR p.total = cast(:filtro as int)")
     Page<Order> search(@Param("filtro") String filtro, Pageable pageable);
+
+    List<Order> findByUser(User user);
 }
+

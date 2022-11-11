@@ -1,0 +1,46 @@
+<th:block th:fragment="order_list">
+
+  <div class="accordion" id="accordion">
+    <th:block th:each="order : ${orders}">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  th:data-bs-target="'#b' + ${order.number}">
+            <div class="row" style="width: 100%">
+              <div class="col-6">Orden Número: <span th:text="${order.number}"></span></div>
+              <div class="col-6">Fecha: <span th:text="${order.date}"></span></div>
+            </div>
+          </button>
+        </h2>
+        <div th:id="'b' + ${order.number}" class="accordion-collapse collapse"
+             data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">Título</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
+              </tr>
+              </thead>
+              <tbody>
+              <th:block th:each="detail : ${order.details}">
+                <tr>
+                  <td th:text="${detail.book.title}"></td>
+                  <td th:text="${detail.quantity}"></td>
+                  <!--td th:text="${detail.price}"></td-->
+                  <td th:text="'$' + ${#numbers.formatDecimal(detail.price, 0, 'POINT', 2, 'COMMA')}"></td>
+                </tr>
+              </th:block>
+              </tbody>
+              <tr>
+                <th colspan="2">Total:</th>
+                <th scope="col" th:text="'$' + ${#numbers.formatDecimal(order.total, 0, 'POINT', 2, 'COMMA')}">Cantidad</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </th:block>
+  </div>
+</th:block>
