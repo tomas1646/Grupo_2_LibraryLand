@@ -23,11 +23,16 @@
             <img th:src="@{'/images/'} + ${cartDetail.book.imageSrc}" class="cart-img" th:alt="${cartDetail.book.title}">          
             <span th:text = "${cartDetail.book.title}"></span>            
           </td>
-          <td th:text = "${cartDetail.price}" class="align-middle text-center"></td>
-          <td class="align-middle text-center">            
-            <button class="btn"><i class="fa fa-minus-circle fa-2x" style="color:#FF8E3C" aria-hidden="true"></i></button>
+          <td th:text = "${cartDetail.price*cartDetail.quantity}" class="align-middle text-center"></td>
+          <td class="align-middle text-center">
+            <form th:action="@{/incrementQuantity/{id}(id=${cartDetail.book.id})}" method="post">
+              <button type="submit" class="btn"><i class="fa fa-plus-circle fa-2x" style="color:#FF8E3C" aria-hidden="true"></i></button>
+            </form>
             <span th:text = "${cartDetail.quantity}" class="border border-dark p-2 bg-grey align-middle"></span>
-            <button class="btn"><i class="fa fa-plus-circle fa-2x" style="color:#FF8E3C" aria-hidden="true"></i></button>
+            <form th:action="@{/reduceQuantity/{id}(id=${cartDetail.book.id})}" method="post">
+              <button type="submit" class="btn"><i class="fa fa-minus-circle fa-2x" style="color:#FF8E3C" aria-hidden="true"></i></button>
+            </form>
+
           </td>
           <td class="align-middle text-center">
             <form th:action="@{/deleteCartDetail/{id}(id=${cartDetail.book.id})}" method="post">
@@ -66,7 +71,7 @@
         <button class="btn btn-lg rounded-pill bg-orange my-3 py-0 px-4 navbar-text">PAGAR</button>
       </div>      
     </div>    
-  </div>  
+  </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>

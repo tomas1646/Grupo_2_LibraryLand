@@ -24,6 +24,8 @@ import com.libraryland.services.BookServiceImpl;
 import com.libraryland.services.CartServiceImpl;
 import com.libraryland.services.UserServiceImpl;
 
+import javax.naming.OperationNotSupportedException;
+
 @Controller
 @CrossOrigin(origins = "*")
 public class Cart_Controller {
@@ -51,7 +53,7 @@ public class Cart_Controller {
                     model.addAttribute("cart", cart);
                     double total = 550;
                     for(int i = 0;i < allCartDetails.size();i++){
-                        total = total + allCartDetails.get(i).getPrice();
+                        total = total + (allCartDetails.get(i).getPrice() * allCartDetails.get(i).getQuantity());
                     }                                               
                     model.addAttribute("total", total);            
                 }else{
@@ -78,16 +80,25 @@ public class Cart_Controller {
                     User user = currentUser.get();
                     Cart cart = user.getCart();
                     Book book = bookService.findById(id);
+
                     if(book.getStock() < 1){
                         throw new Exception("No hay stock");    
-                    }else{
-                        CartDetail cartDetail = CartDetail.builder().cart(cart).book(book).price(book.getPrice()).quantity(1).build();
-                        List<CartDetail> allCartDetails= cart.getDetails();
-                        allCartDetails.add(cartDetail);
-                        cart.setDetails(allCartDetails);
-                        cart.setQuantity(cart.getQuantity() + 1);
+                    }
+
+                    List<CartDetail> allCartDetails = cart.getDetails();
+                    if(allCartDetails.stream().anyMatch(cd->cd.getBook().getId() == book.getId())){
+                        cart = incrementCartDetailQuantity(cart, book);
                         cartService.update(cart.getId(), cart);
-                    }                                        
+                        return "redirect:/";
+                    }
+
+                    CartDetail cartDetail = CartDetail.builder().cart(cart).book(book).price(book.getPrice()).quantity(1).build();
+
+                    allCartDetails.add(cartDetail);
+                    cart.setDetails(allCartDetails);
+                    cart.setQuantity(cart.getQuantity() + 1);
+                    cartService.update(cart.getId(), cart);
+
                 }else{
                     throw new Exception("El usuario no se encuentra en la base de datos");
                 }
@@ -127,5 +138,83 @@ public class Cart_Controller {
         }else{
             return "redirect:/login";
         }
+    }
+    @PostMapping("/reduceQuantity/{id}")
+    public String reduceQuantity(@PathVariable("id") Long id, Model model,Authentication authentication) {
+        if (authentication != null){
+            try {
+                String username =  authentication.getName();
+                Optional<User> currentUser = userService.findByName(username);
+                if(currentUser.isPresent()){
+                    User user = currentUser.get();
+                    Cart cart = user.getCart();
+                    Book book = bookService.findById(id);
+                    List<CartDetail> allCartDetails = cart.getDetails();
+
+                    CartDetail oCartDetail = allCartDetails.stream().filter(cd->cd.getBook().getId() == book.getId()).findFirst().get();
+                    if(oCartDetail.getQuantity()==1){
+                        return "redirect:/findCart";
+                    }
+                    allCartDetails.remove(oCartDetail);
+                    oCartDetail.setQuantity(oCartDetail.getQuantity()-1);
+                    allCartDetails.add(oCartDetail);
+                    cart.setDetails(allCartDetails);
+                    cart.setQuantity(cart.getQuantity() - 1);
+
+                    cartService.update(cart.getId(), cart);
+                    return "redirect:/findCart";
+
+                }else{
+                    throw new Exception("El usuario no se encuentra en la base de datos");
+                }
+            } catch (Exception e) {
+                return "error";
+            }
+        }else{
+            return "redirect:/login";
+        }
+    }
+
+    @PostMapping("/incrementQuantity/{id}")
+    public String incrementQuantity(@PathVariable("id") Long id, Model model,Authentication authentication) {
+        if (authentication != null){
+            try {
+
+                String username =  authentication.getName();
+                Optional<User> currentUser = userService.findByName(username);
+                if(currentUser.isPresent()){
+                    User user = currentUser.get();
+                    Cart cart = user.getCart();
+                    Book book = bookService.findById(id);
+
+                    List<CartDetail> allCartDetails = cart.getDetails();
+
+                    cart = incrementCartDetailQuantity(cart, book);
+                    cartService.update(cart.getId(), cart);
+                    return "redirect:/findCart";
+
+                }else{
+                    throw new Exception("El usuario no se encuentra en la base de datos");
+                }
+            } catch (Exception e) {
+                return "error";
+            }
+        }else{
+            return "redirect:/login";
+        }
+    }
+
+    private Cart incrementCartDetailQuantity(Cart cart, Book book) throws Exception {
+        List<CartDetail> allCartDetails = cart.getDetails();
+        CartDetail oCartDetail = allCartDetails.stream().filter(cd->cd.getBook().getId() == book.getId()).findFirst().get();
+        if(oCartDetail.getQuantity()==book.getStock()){
+            return cart;
+        }
+        allCartDetails.remove(oCartDetail);
+        oCartDetail.setQuantity(oCartDetail.getQuantity()+1);
+        allCartDetails.add(oCartDetail);
+        cart.setDetails(allCartDetails);
+        cart.setQuantity(cart.getQuantity() + 1);
+        return cart;
     }
 }
