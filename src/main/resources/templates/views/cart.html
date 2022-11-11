@@ -23,7 +23,7 @@
             <img th:src="@{'/images/'} + ${cartDetail.book.imageSrc}" class="cart-img" th:alt="${cartDetail.book.title}">          
             <span th:text = "${cartDetail.book.title}"></span>            
           </td>
-          <td th:text = "${cartDetail.price*cartDetail.quantity}" class="align-middle text-center"></td>
+          <td th:text="'$' + ${#numbers.formatDecimal(cartDetail.price*cartDetail.quantity, 0, 'POINT', 2, 'COMMA')}" class="align-middle text-center"></td>
           <td class="align-middle text-center">
             <form th:action="@{/incrementQuantity/{id}(id=${cartDetail.book.id})}" method="post">
               <button type="submit" class="btn"><i class="fa fa-plus-circle fa-2x" style="color:#FF8E3C" aria-hidden="true"></i></button>
@@ -61,7 +61,7 @@
         Total con envio:
       </div>
       <div class="col-2">
-        <span th:text = "|$${total}|"></span>
+        <span th:text="'$' + ${#numbers.formatDecimal(total, 0, 'POINT', 2, 'COMMA')}"></span>
       </div>    
     </div>    
     <div class="row">

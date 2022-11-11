@@ -10,11 +10,11 @@
 
 <div class="container">
     <h3>Editar Contenido</h3>
-    <ul>
-        <li><a th:href="@{/admin/books/list}">Libros</a></li>
-        <li><a th:href="@{/admin/authors/list}">Autores</a></li>
-        <li><a th:href="@{/admin/genres/list}">Generos</a></li>
-    </ul>
+    <div style="display: flex; flex-direction: column; max-width: 300px">
+        <a class="btn m-3 common-button" th:href="@{/admin/books/list}" role="button">Libros</a>
+        <a class="btn m-3 common-button" th:href="@{/admin/authors/list}" role="button">Autores</a>
+        <a class="btn m-3 common-button" th:href="@{/admin/genres/list}" role="button">Generos</a>
+    </div>
 </div>
 
 

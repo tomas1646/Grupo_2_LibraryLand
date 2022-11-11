@@ -89,7 +89,7 @@ public class Cart_Controller {
                     if(allCartDetails.stream().anyMatch(cd->cd.getBook().getId() == book.getId())){
                         cart = incrementCartDetailQuantity(cart, book);
                         cartService.update(cart.getId(), cart);
-                        return "redirect:/";
+                        return "redirect:/findCart";
                     }
 
                     CartDetail cartDetail = CartDetail.builder().cart(cart).book(book).price(book.getPrice()).quantity(1).build();

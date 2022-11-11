@@ -9,19 +9,19 @@
 <nav th:replace="components/navbar :: nav_bar"></nav>
 
 <div class="container">
-    <a class="btn btn-primary m-3" th:href="@{/admin}" role="button">Volver Atrás</a>
-    <a class="btn btn-primary m-3" th:href="@{/admin/authors/0}" role="button">Agregar Nuevo</a>
-    <table class="table">
+    <a class="btn btn-primary m-3 common-button" th:href="@{/admin}" role="button">Volver Atrás</a>
+    <a class="btn btn-primary m-3 common-button" th:href="@{/admin/authors/0}" role="button">Agregar Nuevo</a>
+    <table class="table table-light">
         <thead>
         <tr>
             <th scope="col">Nombre</th>
-            <th scope="col">Acciones</th>
+            <th scope="col" class="text-center">Acciones</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="author : ${authors}">
             <td th:text="${author.fullName}"></td>
-            <td>
+            <td class="d-flex justify-content-center">
                 <a class="btn btn-primary" th:href="@{/admin/authors/{id}(id=${author.id})}" role="button">Editar</a>
                 <a class="btn btn-danger" th:href="@{/admin/authors/delete/{id}(id=${author.id})}"
                    role="button">Eliminar</a>
