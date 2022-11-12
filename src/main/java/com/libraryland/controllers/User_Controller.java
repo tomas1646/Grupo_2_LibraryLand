@@ -2,15 +2,13 @@ package com.libraryland.controllers;
 
 import com.libraryland.entities.Address;
 import com.libraryland.entities.User;
-import com.libraryland.services.UserService;
+import com.libraryland.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
@@ -20,7 +18,7 @@ import javax.validation.ValidationException;
 public class User_Controller {
 
     @Autowired
-    UserService userService;
+    private UserServiceImpl userService;
 
     @GetMapping("/login")
     public String login() {
@@ -61,8 +59,49 @@ public class User_Controller {
         }
     }
 
+    @GetMapping("/users")
+    public String getUser(Model model, Authentication authentication) {
+        try {
+            String username = authentication.getName();
+            User user = userService.findByName(username).get();
+            Address address = user.getAddress();
+            model.addAttribute("user", user);
+            model.addAttribute("address", address);
+            return "views/userDetail";
+        } catch (Exception e) {
+            return "error";
+        }
+    }
+
+    @PostMapping("/users")
+    public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult userResult,
+                             @Valid @ModelAttribute("address") Address address, BindingResult addressResult) {
+
+        try {
+            if (userResult.hasErrors() || addressResult.hasErrors()) {
+                return "views/userDetail";
+            }
+            user.setAddress(address);
+            userService.update(user.getId(), user);
+            return "redirect:/";
+        } catch (ValidationException e) {
+            if (e.getMessage().contains(user.getUsername())) {
+                userResult.rejectValue("username", "error.user", "El nombre de usuario esta ocupado");
+                return "views/userDetail";
+            }
+            if (e.getMessage().contains(user.getEmail())) {
+                userResult.rejectValue("email", "error.user", "El mail esta registrado por otra persona");
+                return "views/userDetail";
+            }
+            return "error";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
     @GetMapping("/admin")
-    public String admin(){
+    public String admin() {
         return "views/admin/admin";
     }
 }

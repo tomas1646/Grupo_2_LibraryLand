@@ -33,7 +33,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin", "/admin/**")
                 .hasAuthority("ADMIN")
 
-                .antMatchers("/orders", "/orders/**")
+                .antMatchers("/orders", "/orders/**", "/users", "/users/**")
                 .hasAnyAuthority("ADMIN", "USER")
 
                 // Allow access to not-authenticated users
