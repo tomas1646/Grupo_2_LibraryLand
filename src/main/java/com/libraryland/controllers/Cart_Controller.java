@@ -238,6 +238,9 @@ public class Cart_Controller {
                     User user = currentUser.get();
                     Cart cart = user.getCart();
                     List<CartDetail> allCartDetails = cart.getDetails();
+                    if(allCartDetails.isEmpty()){
+                       return "redirect:/findCart" ;
+                    }
                     List<OrderDetail> allOrderDetails = new ArrayList<OrderDetail>();
 
                     Random random = new Random();
