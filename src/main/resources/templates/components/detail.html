@@ -4,7 +4,13 @@
             <img th:src="@{'/images/'} + ${book.imageSrc}" class="card-img-top img-fluid book-card-image p-50" th:alt="${book.title}">
             <div class="text-center m-4">
                 <h2>$<span th:text="${book.price}" class="card-subtitle mb-2 text-muted">Card subtitle</span></h2>
-                <button type="button" class="btn btn-warning btn-comprar">Agregar al carrito</button>
+                <form name="b" th:action="@{/addToCart/{id}(id=${book.id})}" method='POST'>
+                    <button th:disabled="${book.stock==0}" class="btn btn-warning bg-orange px-2 py-1" type="submit">
+                        <i class="fa fa-cart-plus fa-lg" style="color:white" aria-hidden="true"></i>
+                        Agregar al carrito
+                        <span th:if="${book.stock==0}">No hay stock</span>
+                    </button>
+                </form>
             </div>
         </div>
         <div class="col-6 mt-50">
