@@ -112,7 +112,7 @@ public class Cart_Controller {
                 }else{
                     throw new Exception("El usuario no se encuentra en la base de datos");
                 }
-                return "redirect:/";
+                return "redirect:/findCart";
                 
             } catch (Exception e) {
                 return "error";
