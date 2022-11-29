@@ -8,6 +8,11 @@
 - Tomás Espinosa
 ```
 
+## Videos Youtube:
+FrontEnd: https://youtu.be/-9N0ib93mnc
+
+BackEnd: https://youtu.be/ShmTcbw-KuI
+
 ## ¿Qué productos o servicios brindará nuestro sitio? 
 
 Nuestro ecommerce es una librería, que ofrece el servicio de venta de libros de todos los géneros, en diferentes idiomas y para todas las edades. 
